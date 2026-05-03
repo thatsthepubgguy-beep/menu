@@ -1,1266 +1,1724 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yo Bar & Restaurant</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yo Bar & Restaurant</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
-    :root {
-      --bg:       #0e0b07;
-      --bg2:      #160f06;
-      --bg3:      #1c1409;
-      --gold:     #c9973a;
-      --gold-lt:  #e8c06a;
-      --gold-dim: #7a5a1e;
-      --cream:    #f0e6cc;
-      --muted:    #8a7a60;
-      --border:   rgba(201,151,58,0.25);
-      --radius:   10px;
-      --ff-head:  'Playfair Display', Georgia, serif;
-      --ff-body:  'Lato', system-ui, sans-serif;
-    }
+        :root {
+            --bg: #0e0b07;
+            --bg2: #160f06;
+            --bg3: #1c1409;
+            --gold: #c9973a;
+            --gold-lt: #e8c06a;
+            --gold-dim: #7a5a1e;
+            --cream: #f0e6cc;
+            --muted: #8a7a60;
+            --border: rgba(201, 151, 58, 0.25);
+            --radius: 10px;
+            --ff-head: 'Playfair Display', Georgia, serif;
+            --ff-body: 'Lato', system-ui, sans-serif;
+        }
 
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    body {
-      font-family: var(--ff-body);
-      background: var(--bg);
-      color: var(--cream);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: var(--ff-body);
+            background: var(--bg);
+            color: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
 
-    /* ── NAVBAR ── */
-    header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-      background: rgba(14,11,7,0.96);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      padding: 0 5%;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
-    .logo {
-      font-family: var(--ff-head);
-      font-size: 1.4rem;
-      color: var(--gold);
-      letter-spacing: 1px;
-      white-space: nowrap;
-    }
-    .logo span { color: var(--cream); font-size: 0.8rem; display:block; font-family: var(--ff-body); letter-spacing:3px; font-weight:300; }
-    nav { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-    nav a {
-      color: var(--muted);
-      font-size: 0.72rem;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      padding: 5px 10px;
-      border-radius: 4px;
-      transition: color .2s, background .2s;
-    }
-    nav a:hover { color: var(--gold); background: rgba(201,151,58,0.08); }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 80px 20px 60px;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,151,58,0.08) 0%, transparent 70%),
-        var(--bg);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content:'';
-      position:absolute; inset:0;
-      background-image:
-        repeating-linear-gradient(0deg,   transparent, transparent 39px, rgba(201,151,58,0.04) 40px),
-        repeating-linear-gradient(90deg,  transparent, transparent 39px, rgba(201,151,58,0.04) 40px);
-      pointer-events:none;
-    }
-    .hero-badge {
-      font-size:0.72rem; letter-spacing:4px; text-transform:uppercase;
-      color:var(--gold); border:1px solid var(--border);
-      padding:6px 20px; border-radius:50px; margin-bottom:28px;
-      position:relative; z-index:1;
-    }
-    .hero h1 {
-      font-family: var(--ff-head);
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      line-height: 1.1;
-      color: var(--cream);
-      position:relative; z-index:1;
-    }
-    .hero h1 em { color: var(--gold); font-style:italic; }
-    .hero-tagline {
-      font-size:1rem; color:var(--muted); margin-top:18px;
-      font-weight:300; letter-spacing:1px;
-      position:relative; z-index:1;
-    }
-    .hero-divider {
-      width:80px; height:2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 30px auto;
-      position:relative; z-index:1;
-    }
-    .hero-btn {
-      display:inline-block;
-      background: linear-gradient(135deg, var(--gold), #a87028);
-      color: var(--bg);
-      padding: 14px 42px;
-      font-size:0.82rem; font-weight:700;
-      text-transform:uppercase; letter-spacing:2px;
-      text-decoration:none; border-radius:3px;
-      position:relative; z-index:1;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .hero-btn:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(201,151,58,0.25); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dim);
+            border-radius: 3px;
+        }
 
-    /* ── PAGE WRAPPER ── */
-    main { padding: 60px 0; }
+        /* ── NAVBAR ── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            background: rgba(14, 11, 7, 0.96);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
 
-    /* ── SECTION ── */
-    .menu-section {
-      max-width: 1100px;
-      margin: 0 auto 70px;
-      padding: 0 5%;
-    }
+        .logo {
+            font-family: var(--ff-head);
+            font-size: 1.4rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
 
-    /* Two-column grid for sections */
-    .sections-grid {
-      max-width: 1100px;
-      margin: 0 auto 70px;
-      padding: 0 5%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px 60px;
-    }
-    @media(max-width:768px){ .sections-grid { grid-template-columns:1fr; } }
+        .logo span {
+            color: var(--cream);
+            font-size: 0.8rem;
+            display: block;
+            font-family: var(--ff-body);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
 
-    .section-header {
-      display:flex; align-items:center; gap:14px;
-      margin-bottom: 28px;
-    }
-    .section-icon {
-      width:38px; height:38px; flex-shrink:0;
-      background: linear-gradient(135deg, var(--gold-dim), #3d2808);
-      border:1px solid var(--border);
-      border-radius: 8px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.1rem;
-    }
-    .section-label {
-      font-family: var(--ff-head);
-      font-size: 1.6rem;
-      color: var(--gold);
-      letter-spacing: 0.5px;
-      line-height:1;
-    }
-    .section-label small {
-      display:block;
-      font-family: var(--ff-body);
-      font-size:0.68rem;
-      color:var(--muted);
-      letter-spacing:2.5px;
-      text-transform:uppercase;
-      font-weight:400;
-      margin-top:3px;
-    }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
 
-    /* ── MENU ITEM ROW ── */
-    .menu-list { list-style:none; }
-    .menu-item {
-      display:flex; align-items:baseline;
-      gap: 8px;
-      padding: 11px 0;
-      border-bottom: 1px solid rgba(201,151,58,0.1);
-      cursor: pointer;
-      position: relative;
-      transition: background .15s;
-      border-radius: 4px;
-    }
-    .menu-item:last-child { border-bottom: none; }
-    .menu-item:hover { background: rgba(201,151,58,0.06); padding-left: 8px; padding-right:8px; }
-    .menu-item:hover .item-name { color: var(--gold-lt); }
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--gold);
+            transition: 0.3s;
+        }
 
-    .item-name {
-      font-size: 0.93rem;
-      color: var(--cream);
-      font-weight:400;
-      white-space: nowrap;
-      transition: color .15s;
-      flex-shrink:0;
-    }
-    .item-dots {
-      flex:1;
-      border-bottom: 2px dotted rgba(201,151,58,0.2);
-      min-width: 20px;
-      margin-bottom: 4px;
-    }
-    .item-price {
-      font-family: var(--ff-head);
-      font-size: 0.95rem;
-      color: var(--gold);
-      white-space: nowrap;
-      flex-shrink:0;
-      font-weight:400;
-    }
-    .item-tap {
-      font-size:0.62rem; color:var(--muted);
-      position:absolute; right:0; top:50%;
-      transform:translateY(-50%);
-      opacity:0;
-      transition: opacity .15s;
-      background: rgba(201,151,58,0.12);
-      padding:2px 7px; border-radius:3px;
-      pointer-events:none;
-    }
-    .menu-item:hover .item-price { margin-right: 52px; }
-    .menu-item:hover .item-tap { opacity:1; }
+        nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
 
-    /* ── FULL-WIDTH SECTION HEADER ── */
-    .section-full-header {
-      max-width:1100px; margin: 0 auto 10px; padding:0 5%;
-      display:flex; align-items:center; gap:16px;
-    }
-    .sfh-line { flex:1; height:1px; background: linear-gradient(90deg, var(--gold-dim), transparent); }
-    .sfh-text {
-      font-family: var(--ff-head);
-      font-size: 2.2rem; color: var(--gold);
-      white-space:nowrap;
-    }
-    .sfh-sub {
-      max-width:1100px; margin: 0 auto 40px; padding: 0 5%;
-      font-size:0.78rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase;
-    }
+        nav a {
+            color: var(--muted);
+            font-size: 0.72rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: color .2s, background .2s;
+        }
 
-    /* ── MODAL ── */
-    .modal-backdrop {
-      position:fixed; inset:0; z-index:1000;
-      background: rgba(6,4,2,0.92);
-      backdrop-filter: blur(10px);
-      display:flex; align-items:center; justify-content:center;
-      padding:20px;
-      opacity:0; visibility:hidden;
-      transition: opacity .3s, visibility .3s;
-    }
-    .modal-backdrop.open { opacity:1; visibility:visible; }
+        @media(max-width:992px) {
+            .menu-toggle {
+                display: flex;
+            }
 
-    .modal-box {
-      background: linear-gradient(160deg, #1e1608 0%, #130e05 100%);
-      border: 1px solid rgba(201,151,58,0.4);
-      border-radius: 14px;
-      width:100%; max-width:540px;
-      max-height: 90vh;
-      overflow-y:auto;
-      position:relative;
-      transform: scale(0.94) translateY(16px);
-      transition: transform .35s cubic-bezier(.175,.885,.32,1.275);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,151,58,0.1);
-    }
-    .modal-backdrop.open .modal-box { transform: scale(1) translateY(0); }
+            nav {
+                position: fixed;
+                top: 64px;
+                left: 0;
+                width: 100%;
+                background: var(--bg2);
+                flex-direction: column;
+                padding: 20px;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
+                transform: translateY(-150%);
+                opacity: 0;
+                visibility: hidden;
+            }
 
-    .modal-img-strip {
-      width:100%; height:180px;
-      background: linear-gradient(135deg, #1a1005, #2a1c08, #1a1005);
-      display:flex; align-items:center; justify-content:center;
-      border-bottom:1px solid var(--border);
-      border-radius:14px 14px 0 0;
-      position:relative;
-      overflow:hidden;
-    }
-    .modal-img-strip::before {
-      content:'';
-      position:absolute; inset:0;
-      background-image: repeating-linear-gradient(45deg, rgba(201,151,58,0.03) 0px, rgba(201,151,58,0.03) 1px, transparent 1px, transparent 12px);
-    }
-    .modal-plate-icon {
-      width:90px; height:90px;
-      border-radius:50%;
-      border:2px solid rgba(201,151,58,0.3);
-      display:flex; align-items:center; justify-content:center;
-      font-size:2.8rem;
-      background: rgba(201,151,58,0.06);
-      position:relative; z-index:1;
-    }
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
 
-    .modal-body { padding:32px 32px 36px; }
+            nav a {
+                padding: 12px;
+                border-bottom: 1px solid rgba(201, 151, 58, 0.05);
+                width: 100%;
+                text-align: center;
+            }
+        }
 
-    .modal-category {
-      font-size:0.65rem; letter-spacing:3px; text-transform:uppercase;
-      color:var(--muted); margin-bottom:8px;
-    }
-    .modal-title {
-      font-family: var(--ff-head);
-      font-size:2rem; color:var(--gold-lt);
-      line-height:1.15; margin-bottom:10px;
-    }
-    .modal-price-tag {
-      display:inline-flex; align-items:center; gap:6px;
-      background: rgba(201,151,58,0.12);
-      border:1px solid rgba(201,151,58,0.3);
-      padding:6px 18px; border-radius:50px;
-      margin-bottom:22px;
-    }
-    .modal-price-tag span { font-family:var(--ff-head); font-size:1.4rem; color:var(--gold); }
-    .modal-price-tag small { font-size:0.72rem; color:var(--muted); }
+        nav a:hover {
+            color: var(--gold);
+            background: rgba(201, 151, 58, 0.08);
+        }
 
-    .modal-desc {
-      font-size:0.92rem; color:var(--cream); font-style:italic;
-      margin-bottom:20px; line-height:1.7;
-    }
-    .modal-divider {
-      height:1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin:20px 0;
-    }
-    .modal-section-label {
-      font-size:0.65rem; letter-spacing:2.5px; text-transform:uppercase;
-      color:var(--gold-dim); margin-bottom:8px;
-    }
-    .modal-details {
-      font-size:0.88rem; color:var(--muted); line-height:1.75;
-      margin-bottom:18px;
-    }
-    .modal-tags { display:flex; flex-wrap:wrap; gap:6px; }
-    .modal-tag {
-      font-size:0.72rem; padding:3px 12px; border-radius:50px;
-      border:1px solid rgba(201,151,58,0.3);
-      color:var(--gold); letter-spacing:0.5px;
-    }
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px 60px;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201, 151, 58, 0.08) 0%, transparent 70%),
+                var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .modal-close {
-      position:absolute; top:14px; right:14px;
-      width:34px; height:34px; border-radius:50%;
-      background: rgba(14,11,7,0.8);
-      border:1px solid rgba(201,151,58,0.3);
-      color:var(--muted);
-      cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.2rem; line-height:1;
-      transition:color .2s, border-color .2s, transform .2s;
-      z-index:10;
-    }
-    .modal-close:hover { color:var(--gold); border-color:var(--gold); transform:rotate(90deg); }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201, 151, 58, 0.04) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201, 151, 58, 0.04) 40px);
+            pointer-events: none;
+        }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top:1px solid var(--border);
-      padding:60px 5% 30px;
-      text-align:center;
-    }
-    .footer-logo { font-family:var(--ff-head); font-size:1.8rem; color:var(--gold); margin-bottom:6px; }
-    .footer-tagline { font-size:0.75rem; color:var(--muted); letter-spacing:3px; text-transform:uppercase; margin-bottom:36px; }
-    .footer-grid {
-      display:grid; grid-template-columns:repeat(3,1fr); gap:30px;
-      max-width:700px; margin:0 auto 40px; text-align:center;
-    }
-    @media(max-width:600px){ .footer-grid { grid-template-columns:1fr; } }
-    .footer-col h4 { color:var(--gold); font-family:var(--ff-head); font-size:0.95rem; margin-bottom:10px; font-weight:400; }
-    .footer-col p { color:var(--muted); font-size:0.82rem; margin-bottom:4px; }
-    .footer-copy { color:#3a3020; font-size:0.72rem; letter-spacing:1px; border-top:1px solid rgba(201,151,58,0.08); padding-top:24px; margin-top:24px; }
+        .hero-badge {
+            font-size: 0.72rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--border);
+            padding: 6px 20px;
+            border-radius: 50px;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
 
-    /* ── SECTION DIVIDER ── */
-    .sec-divider {
-      max-width:1100px; margin:0 auto 60px; padding:0 5%;
-      display:flex; align-items:center; gap:20px;
-    }
-    .sec-divider::before, .sec-divider::after {
-      content:''; flex:1; height:1px;
-      background: linear-gradient(90deg, transparent, var(--gold-dim));
-    }
-    .sec-divider::after { background: linear-gradient(90deg, var(--gold-dim), transparent); }
-    .sec-divider span { color:var(--gold-dim); font-size:1rem; }
+        .hero h1 {
+            font-family: var(--ff-head);
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            line-height: 1.1;
+            color: var(--cream);
+            position: relative;
+            z-index: 1;
+        }
 
-    /* ── RESPONSIVE ── */
-    @media(max-width:600px){
-      .logo span { display:none; }
-      nav a { font-size:0.65rem; padding:4px 7px; letter-spacing:1px; }
-      .modal-body { padding:22px 20px 28px; }
-      .modal-img-strip { height:130px; }
-    }
-  </style>
+        .hero h1 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .hero-tagline {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-top: 18px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 30px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), #a87028);
+            color: var(--bg);
+            padding: 14px 42px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 3px;
+            position: relative;
+            z-index: 1;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(201, 151, 58, 0.25);
+        }
+
+        /* ── PAGE WRAPPER ── */
+        main {
+            padding: 60px 0;
+        }
+
+        /* ── SECTION ── */
+        .menu-section {
+            max-width: 1100px;
+            margin: 0 auto 70px;
+            padding: 0 5%;
+        }
+
+        /* Two-column grid for sections */
+        .sections-grid {
+            max-width: 1100px;
+            margin: 0 auto 70px;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px 60px;
+        }
+
+        @media(max-width:768px) {
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .section-icon {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--gold-dim), #3d2808);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .section-label {
+            font-family: var(--ff-head);
+            font-size: 1.6rem;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+
+        .section-label small {
+            display: block;
+            font-family: var(--ff-body);
+            font-size: 0.68rem;
+            color: var(--muted);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-top: 3px;
+        }
+
+        /* ── MENU ITEM ROW ── */
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            padding: 11px 0;
+            border-bottom: 1px solid rgba(201, 151, 58, 0.1);
+            cursor: pointer;
+            position: relative;
+            transition: background .15s;
+            border-radius: 4px;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: rgba(201, 151, 58, 0.06);
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .menu-item:hover .item-name {
+            color: var(--gold-lt);
+        }
+
+        .item-name {
+            font-size: 0.93rem;
+            color: var(--cream);
+            font-weight: 400;
+            white-space: nowrap;
+            transition: color .15s;
+            flex-shrink: 0;
+        }
+
+        .item-dots {
+            flex: 1;
+            border-bottom: 2px dotted rgba(201, 151, 58, 0.2);
+            min-width: 20px;
+            margin-bottom: 4px;
+        }
+
+        .item-price {
+            font-family: var(--ff-head);
+            font-size: 0.95rem;
+            color: var(--gold);
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-weight: 400;
+        }
+
+        .item-tap {
+            font-size: 0.62rem;
+            color: var(--muted);
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity .15s;
+            background: rgba(201, 151, 58, 0.12);
+            padding: 2px 7px;
+            border-radius: 3px;
+            pointer-events: none;
+        }
+
+        .menu-item:hover .item-price {
+            margin-right: 52px;
+        }
+
+        .menu-item:hover .item-tap {
+            opacity: 1;
+        }
+
+        /* ── FULL-WIDTH SECTION HEADER ── */
+        .section-full-header {
+            max-width: 1100px;
+            margin: 0 auto 10px;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sfh-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold-dim), transparent);
+        }
+
+        .sfh-text {
+            font-family: var(--ff-head);
+            font-size: 2.2rem;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .sfh-sub {
+            max-width: 1100px;
+            margin: 0 auto 40px;
+            padding: 0 5%;
+            font-size: 0.78rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ── MODAL ── */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(6, 4, 2, 0.92);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .3s, visibility .3s;
+        }
+
+        .modal-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: linear-gradient(160deg, #1e1608 0%, #130e05 100%);
+            border: 1px solid rgba(201, 151, 58, 0.4);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 540px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.94) translateY(16px);
+            transition: transform .35s cubic-bezier(.175, .885, .32, 1.275);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(201, 151, 58, 0.1);
+        }
+
+        .modal-backdrop.open .modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-img-strip {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #1a1005, #2a1c08, #1a1005);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+            border-radius: 14px 14px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-img-strip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(45deg, rgba(201, 151, 58, 0.03) 0px, rgba(201, 151, 58, 0.03) 1px, transparent 1px, transparent 12px);
+        }
+
+        .modal-plate-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px solid rgba(201, 151, 58, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            background: rgba(201, 151, 58, 0.06);
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-body {
+            padding: 32px 32px 36px;
+        }
+
+        .modal-category {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .modal-title {
+            font-family: var(--ff-head);
+            font-size: 2rem;
+            color: var(--gold-lt);
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .modal-price-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(201, 151, 58, 0.12);
+            border: 1px solid rgba(201, 151, 58, 0.3);
+            padding: 6px 18px;
+            border-radius: 50px;
+            margin-bottom: 22px;
+        }
+
+        .modal-price-tag span {
+            font-family: var(--ff-head);
+            font-size: 1.4rem;
+            color: var(--gold);
+        }
+
+        .modal-price-tag small {
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+
+        .modal-desc {
+            font-size: 0.92rem;
+            color: var(--cream);
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .modal-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 20px 0;
+        }
+
+        .modal-section-label {
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: 8px;
+        }
+
+        .modal-details {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.75;
+            margin-bottom: 18px;
+        }
+
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .modal-tag {
+            font-size: 0.72rem;
+            padding: 3px 12px;
+            border-radius: 50px;
+            border: 1px solid rgba(201, 151, 58, 0.3);
+            color: var(--gold);
+            letter-spacing: 0.5px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(14, 11, 7, 0.8);
+            border: 1px solid rgba(201, 151, 58, 0.3);
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: color .2s, border-color .2s, transform .2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 5% 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--ff-head);
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .footer-tagline {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 36px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        @media(max-width:600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-col h4 {
+            color: var(--gold);
+            font-family: var(--ff-head);
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .footer-col p {
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-bottom: 4px;
+        }
+
+        .footer-copy {
+            color: #3a3020;
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(201, 151, 58, 0.08);
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+
+        /* ── SECTION DIVIDER ── */
+        .sec-divider {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .sec-divider::before,
+        .sec-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim));
+        }
+
+        .sec-divider::after {
+            background: linear-gradient(90deg, var(--gold-dim), transparent);
+        }
+
+        .sec-divider span {
+            color: var(--gold-dim);
+            font-size: 1rem;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:600px) {
+            .logo span {
+                display: none;
+            }
+
+            nav a {
+                font-size: 0.65rem;
+                padding: 4px 7px;
+                letter-spacing: 1px;
+            }
+
+            .modal-body {
+                padding: 22px 20px 28px;
+            }
+
+            .modal-img-strip {
+                height: 130px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- ══════════════════════ NAVBAR ══════════════════════ -->
-<header>
-  <div class="logo">
-    Yo Bar &amp; Restaurant
-    <span>Feels Every Thing</span>
-  </div>
-  <nav>
-    <a href="#breakfast">Breakfast</a>
-    <a href="#lunch">Lunch</a>
-    <a href="#snack">Snack</a>
-    <a href="#pizza">Pizza</a>
-    <a href="#asian">Asian</a>
-    <a href="#pasta">Pasta</a>
-    <a href="#juice">Juice</a>
-    <a href="#hotdrinks">Hot Drinks</a>
-    <a href="#colddrinks">Cold Drinks</a>
-    <a href="#fish">Fish</a>
-    <a href="#salads">Salads</a>
-  </nav>
-</header>
+    <!-- ══════════════════════ NAVBAR ══════════════════════ -->
+    <header>
+        <div class="logo">
+            Yo Bar &amp; Restaurant
+            <span>Feels Every Thing</span>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <nav id="nav-list">
+            <a href="#breakfast">Breakfast</a>
+            <a href="#lunch">Lunch</a>
+            <a href="#snack">Snack</a>
+            <a href="#pizza">Pizza</a>
+            <a href="#asian">Asian</a>
+            <a href="#pasta">Pasta</a>
+            <a href="#juice">Juice</a>
+            <a href="#hotdrinks">Hot Drinks</a>
+            <a href="#colddrinks">Cold Drinks</a>
+            <a href="#fish">Fish</a>
+            <a href="#salads">Salads</a>
+        </nav>
+    </header>
 
-<!-- ══════════════════════ HERO ══════════════════════ -->
-<section class="hero">
-  <div class="hero-badge">&#9670; Nazreth's Finest &#9670;</div>
-  <h1>Yo Bar &amp;<br><em>Restaurant</em></h1>
-  <p class="hero-tagline">Feels Every Thing &nbsp;&mdash;&nbsp; Full Menu</p>
-  <div class="hero-divider"></div>
-  <a href="#breakfast" class="hero-btn">Explore Full Menu</a>
-</section>
+    <!-- ══════════════════════ HERO ══════════════════════ -->
+    <section class="hero">
+        <div class="hero-badge">&#9670; Nazreth's Finest &#9670;</div>
+        <h1>Yo Bar &amp;<br><em>Restaurant</em></h1>
+        <p class="hero-tagline">Feels Every Thing &nbsp;&mdash;&nbsp; Full Menu</p>
+        <div class="hero-divider"></div>
+        <a href="#breakfast" class="hero-btn">Explore Full Menu</a>
+    </section>
 
-<main>
+    <main>
 
-<!-- ══════════════════════ BREAKFAST + LUNCH ══════════════════════ -->
-<div class="sec-divider" id="breakfast"><span>&#9670;</span></div>
+        <!-- ══════════════════════ BREAKFAST + LUNCH ══════════════════════ -->
+        <div class="sec-divider" id="breakfast"><span>&#9670;</span></div>
 
-<div class="sections-grid">
+        <div class="sections-grid">
 
-  <!-- BREAKFAST -->
-  <div>
-    <div class="section-header">
-      <div class="section-icon">🍳</div>
-      <div class="section-label">Breakfast<small>Morning Selections</small></div>
+            <!-- BREAKFAST -->
+            <div>
+                <div class="section-header">
+                    <div class="section-icon">🍳</div>
+                    <div class="section-label">Breakfast<small>Morning Selections</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Dulet" data-price="450" data-category="Breakfast" data-icon="🍳"
+                        data-desc="Minced tripe, liver, and lean meat sautéed with berbere and niter kibbeh."
+                        data-details="A beloved Ethiopian breakfast specialty — finely minced tripe, liver, and lean beef pan-fried with berbere spice, onions, and clarified spiced butter. Rich, bold, and deeply satisfying."
+                        data-tags="Meat · Spicy">
+                        <span class="item-name">Dulet</span><span class="item-dots"></span><span class="item-price">450
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Firfir" data-price="280" data-category="Breakfast" data-icon="🫓"
+                        data-desc="Torn injera stir-fried with berbere sauce and spiced butter."
+                        data-details="Classic Ethiopian breakfast of shredded injera cooked with berbere sauce and niter kibbeh, creating a hearty, warming dish packed with traditional flavours."
+                        data-tags="Gluten · Spicy">
+                        <span class="item-name">Firfir</span><span class="item-dots"></span><span class="item-price">280
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tibes Firfir" data-price="450" data-category="Breakfast"
+                        data-icon="🥩" data-desc="Firfir topped with tender sautéed beef tibs."
+                        data-details="A satisfying combination of classic firfir enriched with juicy sautéed beef tibs, seasoned with rosemary, onions, and Ethiopian spices for a fuller morning meal."
+                        data-tags="Meat · Gluten · Spicy">
+                        <span class="item-name">Tibes Firfir</span><span class="item-dots"></span><span
+                            class="item-price">450 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Kuanta Firfir" data-price="480" data-category="Breakfast"
+                        data-icon="🥩" data-desc="Injera firfir with richly spiced dried cured beef."
+                        data-details="Traditional firfir elevated with kuanta — richly spiced dried cured beef — folded into berbere-seasoned injera. An authentic taste of Ethiopian highland cuisine."
+                        data-tags="Meat · Gluten · Spicy">
+                        <span class="item-name">Kuanta Firfir</span><span class="item-dots"></span><span
+                            class="item-price">480 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Atekelet Firfir" data-price="300" data-category="Breakfast"
+                        data-icon="🥦" data-desc="Vegetarian firfir with mixed seasonal vegetables."
+                        data-details="A fasting-friendly firfir made with colourful seasonal vegetables, berbere, and injera. Light yet flavourful — perfect for a plant-based morning start."
+                        data-tags="Vegan · Fasting-Friendly">
+                        <span class="item-name">Atekelet Firfir</span><span class="item-dots"></span><span
+                            class="item-price">300 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chechebsa" data-price="270" data-category="Breakfast"
+                        data-icon="🫓" data-desc="Shredded flatbread with spiced butter and berbere."
+                        data-details="A traditional Oromo breakfast made from pan-fried flatbread torn and mixed with niter kibbeh and berbere. Comforting, aromatic, and deeply rooted in Ethiopian culture."
+                        data-tags="Dairy · Gluten">
+                        <span class="item-name">Chechebsa</span><span class="item-dots"></span><span
+                            class="item-price">270 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Special Chechebsa" data-price="350" data-category="Breakfast"
+                        data-icon="🫓" data-desc="Premium chechebsa with extra niter kibbeh and a richer spice blend."
+                        data-details="Our chef's upgraded version of chechebsa, featuring extra niter kibbeh, a richer berbere blend, and garnished with fresh herbs for a more indulgent morning experience."
+                        data-tags="Dairy · Gluten">
+                        <span class="item-name">Special Chechebsa</span><span class="item-dots"></span><span
+                            class="item-price">350 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Kinche" data-price="280" data-category="Breakfast" data-icon="🫙"
+                        data-desc="Cracked wheat porridge finished with spiced butter."
+                        data-details="A wholesome Ethiopian porridge made from cracked wheat or barley, slow-cooked and finished with a generous drizzle of niter kibbeh. Simple, nourishing, and delicious."
+                        data-tags="Gluten · Dairy">
+                        <span class="item-name">Kinche</span><span class="item-dots"></span><span class="item-price">280
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Omlet" data-price="270" data-category="Breakfast" data-icon="🍳"
+                        data-desc="Classic fluffy omelette seasoned to perfection."
+                        data-details="A golden, fluffy omelette prepared with fresh eggs and perfectly seasoned. A reliable and satisfying breakfast staple at Yo Bar & Restaurant."
+                        data-tags="Eggs · Dairy">
+                        <span class="item-name">Omlet</span><span class="item-dots"></span><span class="item-price">270
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Egg Scrambler" data-price="280" data-category="Breakfast"
+                        data-icon="🍳" data-desc="Soft scrambled eggs with onions, tomatoes, and spices."
+                        data-details="Fresh eggs scrambled with diced onions, ripe tomatoes, and aromatic spices. Light, satisfying, and ready in minutes — a morning favourite."
+                        data-tags="Eggs">
+                        <span class="item-name">Egg Scrambler</span><span class="item-dots"></span><span
+                            class="item-price">280 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Special Omlet" data-price="400" data-category="Breakfast"
+                        data-icon="🍳" data-desc="Loaded omelette with vegetables, cheese, and premium fillings."
+                        data-details="Our upgraded omelette bursting with sautéed vegetables, cheese, and extra fillings. A hearty, protein-packed breakfast that keeps you going all morning."
+                        data-tags="Eggs · Dairy">
+                        <span class="item-name">Special Omlet</span><span class="item-dots"></span><span
+                            class="item-price">400 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Egg with Meat" data-price="400" data-category="Breakfast"
+                        data-icon="🍳" data-desc="Fresh eggs cooked alongside tender seasoned meat."
+                        data-details="A filling combination of fresh eggs prepared alongside seasoned sautéed meat — the perfect protein-rich breakfast to fuel a full day."
+                        data-tags="Eggs · Meat">
+                        <span class="item-name">Egg with Meat</span><span class="item-dots"></span><span
+                            class="item-price">400 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Combo" data-price="650" data-category="Breakfast" data-icon="🍽️"
+                        data-desc="A generous breakfast combination of multiple traditional items."
+                        data-details="The ultimate Yo breakfast combination — a well-rounded plate featuring a selection of our favourite traditional breakfast dishes served together for maximum satisfaction."
+                        data-tags="Meat · Dairy · Gluten">
+                        <span class="item-name">Combo</span><span class="item-dots"></span><span class="item-price">650
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Fasting Combo" data-price="550" data-category="Breakfast"
+                        data-icon="🌿" data-desc="Plant-based fasting breakfast combination platter."
+                        data-details="A beautifully assembled fasting platter with a variety of plant-based Ethiopian breakfast items — perfect for fasting days or those preferring a vegan meal."
+                        data-tags="Vegan · Fasting-Friendly">
+                        <span class="item-name">Fasting Combo</span><span class="item-dots"></span><span
+                            class="item-price">550 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Fetira" data-price="370" data-category="Breakfast" data-icon="🫓"
+                        data-desc="Crispy Ethiopian flatbread drizzled with honey or spiced butter."
+                        data-details="A thin, crispy pan-fried bread served warm with honey or niter kibbeh. A beloved Ethiopian street-food breakfast that's simple, sweet, and utterly delicious."
+                        data-tags="Gluten · Dairy">
+                        <span class="item-name">Fetira</span><span class="item-dots"></span><span class="item-price">370
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Yebet Keta" data-price="200" data-category="Breakfast"
+                        data-icon="☕" data-desc="Light homestyle morning dish — simple and affordable."
+                        data-details="A light, affordable homestyle breakfast option. Quick, comforting, and perfect for a simple start to the morning at a great price."
+                        data-tags="Light">
+                        <span class="item-name">Yebet Keta</span><span class="item-dots"></span><span
+                            class="item-price">200 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Eggs with Avocado" data-price="370" data-category="Breakfast"
+                        data-icon="🥑" data-desc="Fresh eggs served with creamy sliced avocado."
+                        data-details="A modern breakfast favourite — perfectly cooked eggs paired with fresh, creamy avocado. Nutritious, satisfying, and beautifully presented."
+                        data-tags="Eggs · Healthy">
+                        <span class="item-name">Eggs with Avocado</span><span class="item-dots"></span><span
+                            class="item-price">370 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- LUNCH -->
+            <div id="lunch">
+                <div class="section-header">
+                    <div class="section-icon">🍲</div>
+                    <div class="section-label">Lunch<small>Traditional Favourites</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="LAMP Tibes" data-price="650" data-category="Lunch" data-icon="🐑"
+                        data-desc="Tender lamb pieces sautéed with rosemary, onions, and jalapeños."
+                        data-details="Succulent lamb cut into generous pieces and sautéed with rosemary, onions, jalapeños, and niter kibbeh. A robust and flavourful centrepiece of Ethiopian cuisine."
+                        data-tags="Lamb · Spicy">
+                        <span class="item-name">LAMP Tibes</span><span class="item-dots"></span><span
+                            class="item-price">650 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Fillet Tibes" data-price="600" data-category="Lunch"
+                        data-icon="🥩" data-desc="Premium beef fillet tibs with onions, tomatoes, and herbs."
+                        data-details="Choice cuts of beef fillet stir-fried with onions, tomatoes, jalapeños, and rosemary in spiced butter. Tender, juicy, and full of bold Ethiopian flavour."
+                        data-tags="Beef · Spicy">
+                        <span class="item-name">Fillet Tibes</span><span class="item-dots"></span><span
+                            class="item-price">600 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Traditional Combo" data-price="1700" data-category="Lunch"
+                        data-icon="🍽️" data-desc="A grand platter of traditional Ethiopian meat and vegetable stews."
+                        data-details="The ultimate Ethiopian feast — a large injera-lined platter topped with a curated selection of meat and vegetable stews, representing the very best of our traditional kitchen."
+                        data-tags="Meat · Gluten · Shareable">
+                        <span class="item-name">Traditional Combo</span><span class="item-dots"></span><span
+                            class="item-price">1,700 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Hafe Combo" data-price="1050" data-category="Lunch"
+                        data-icon="🍽️" data-desc="Half-portion traditional combo platter — great for solo diners."
+                        data-details="All the variety of our Traditional Combo in a smaller, more manageable portion. Ideal for solo diners wanting a taste of everything without the full serving."
+                        data-tags="Meat · Gluten">
+                        <span class="item-name">Hafe Combo</span><span class="item-dots"></span><span
+                            class="item-price">1,050 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Shiro" data-price="280" data-category="Lunch" data-icon="🫙"
+                        data-desc="Smooth spiced chickpea stew served with injera."
+                        data-details="A comforting Ethiopian staple — finely ground chickpea flour simmered into a rich, velvety stew seasoned with berbere, garlic, and onions. Fasting-friendly and deeply satisfying."
+                        data-tags="Vegan · Fasting-Friendly">
+                        <span class="item-name">Shiro</span><span class="item-dots"></span><span class="item-price">280
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tegabino" data-price="320" data-category="Lunch" data-icon="🫙"
+                        data-desc="Shiro served piping hot in a traditional clay pot."
+                        data-details="Shiro served in a traditional clay pot (tegabino), keeping it piping hot and enhancing the earthy flavours. A rustic, authentic way to enjoy this beloved dish."
+                        data-tags="Vegan · Fasting-Friendly">
+                        <span class="item-name">Tegabino</span><span class="item-dots"></span><span
+                            class="item-price">320 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Bozena Shiro" data-price="450" data-category="Lunch"
+                        data-icon="🫙" data-desc="Chickpea stew enriched with tender meat pieces."
+                        data-details="Elevated shiro stew studded with tender chunks of meat, adding richness and depth. A hearty option for meat lovers who also love their shiro."
+                        data-tags="Meat · Gluten">
+                        <span class="item-name">Bozena Shiro</span><span class="item-dots"></span><span
+                            class="item-price">450 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Agelegel" data-price="1500" data-category="Lunch" data-icon="🧺"
+                        data-desc="Traditional multi-layer injera meal in a woven basket."
+                        data-details="A beautiful traditional presentation: layered injera filled with an assortment of stews and toppings, packed into a woven basket. A complete and celebratory Ethiopian meal."
+                        data-tags="Meat · Gluten · Shareable">
+                        <span class="item-name">Agelegel</span><span class="item-dots"></span><span
+                            class="item-price">1,500 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Half Agelegel" data-price="850" data-category="Lunch"
+                        data-icon="🧺" data-desc="Half-portion of the traditional injera basket meal."
+                        data-details="The beloved Agelegel experience in a smaller portion — perfect for individuals or couples wanting the authentic layered injera basket without the full serving."
+                        data-tags="Meat · Gluten">
+                        <span class="item-name">Half Agelegel</span><span class="item-dots"></span><span
+                            class="item-price">850 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Keywet" data-price="450" data-category="Lunch" data-icon="🍲"
+                        data-desc="Slow-simmered red beef stew with berbere and niter kibbeh."
+                        data-details="A cornerstone of Ethiopian cuisine — beef slow-cooked in a deeply spiced berbere and niter kibbeh sauce until fall-apart tender. Rich, fragrant, and utterly irresistible."
+                        data-tags="Beef · Spicy · Gluten">
+                        <span class="item-name">Keywet</span><span class="item-dots"></span><span class="item-price">450
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Gomen Besga" data-price="450" data-category="Lunch" data-icon="🥬"
+                        data-desc="Collard greens cooked with beef and Ethiopian spices."
+                        data-details="Tender collard greens sautéed with seasoned beef pieces and aromatic spices. A wholesome dish that balances greens and meat in perfect harmony."
+                        data-tags="Beef · Greens">
+                        <span class="item-name">Gomen Besga</span><span class="item-dots"></span><span
+                            class="item-price">450 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Fasting Combo" data-price="650" data-category="Lunch"
+                        data-icon="🌿" data-desc="Assorted plant-based fasting dishes on a shared injera platter."
+                        data-details="A vibrant fasting platter featuring an assortment of plant-based stews and salads served on injera. Colourful, nourishing, and a celebration of Ethiopian fasting cuisine."
+                        data-tags="Vegan · Fasting-Friendly · Gluten">
+                        <span class="item-name">Fasting Combo</span><span class="item-dots"></span><span
+                            class="item-price">650 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div><!-- /sections-grid -->
+
+        <!-- ══════════════════════ SNACK + PIZZA ══════════════════════ -->
+        <div class="sec-divider" id="snack"><span>&#9670;</span></div>
+
+        <div class="sections-grid">
+
+            <!-- SNACK -->
+            <div>
+                <div class="section-header">
+                    <div class="section-icon">🍔</div>
+                    <div class="section-label">Snack<small>Burgers &amp; Sandwiches</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Yo Special Burger" data-price="530" data-category="Snack"
+                        data-icon="🍔" data-desc="Yo Bar's signature house burger with special sauce."
+                        data-details="Our signature house burger — a juicy seasoned patty layered with our special Yo sauce, fresh vegetables, and toasted bun. The one that started it all."
+                        data-tags="Gluten · Meat · Signature">
+                        <span class="item-name">Yo Special Burger</span><span class="item-dots"></span><span
+                            class="item-price">530 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Yo Feshta Burger" data-price="700" data-category="Snack"
+                        data-icon="🍔" data-desc="Premium loaded burger — the Yo celebration burger."
+                        data-details="Our premium celebration burger stacked with extra fillings, double sauce, and everything that makes a burger unforgettable. Order this for a reason to feast."
+                        data-tags="Gluten · Meat · Premium">
+                        <span class="item-name">Yo Feshta Burger</span><span class="item-dots"></span><span
+                            class="item-price">700 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Big Burger" data-price="580" data-category="Snack" data-icon="🍔"
+                        data-desc="A generous double-patty burger with all the trimmings."
+                        data-details="Go big or go home — a generously sized burger with a thick, juicy patty, crisp lettuce, tomatoes, pickles, and a rich house sauce on a sesame bun."
+                        data-tags="Gluten · Meat">
+                        <span class="item-name">Big Burger</span><span class="item-dots"></span><span
+                            class="item-price">580 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chicken Shewarema" data-price="580" data-category="Snack"
+                        data-icon="🌯" data-desc="Spiced shawarma-style chicken wrap with fresh vegetables."
+                        data-details="Marinated and slow-roasted chicken carved into a soft wrap with garlic sauce, fresh tomatoes, and crunchy vegetables. Middle Eastern-inspired street food perfection."
+                        data-tags="Poultry · Gluten">
+                        <span class="item-name">Chicken Shewarema</span><span class="item-dots"></span><span
+                            class="item-price">580 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Egg Sandwich" data-price="370" data-category="Snack"
+                        data-icon="🥚" data-desc="Fresh egg sandwich on toasted bread with vegetables."
+                        data-details="A satisfying egg sandwich layered with fresh vegetables on toasted bread. Simple, affordable, and always delicious — a quick snack favourite."
+                        data-tags="Eggs · Gluten">
+                        <span class="item-name">Egg Sandwich</span><span class="item-dots"></span><span
+                            class="item-price">370 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Vegetable Sandwich" data-price="350" data-category="Snack"
+                        data-icon="🥗" data-desc="Fresh garden vegetable sandwich on toasted bread."
+                        data-details="A light and fresh sandwich packed with crisp garden vegetables and a house dressing. Perfect for a light snack or fasting-friendly bite."
+                        data-tags="Vegetarian · Gluten">
+                        <span class="item-name">Vegetable Sandwich</span><span class="item-dots"></span><span
+                            class="item-price">350 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Club Sandwich" data-price="530" data-category="Snack"
+                        data-icon="🥪" data-desc="Classic triple-decker club sandwich with chicken and fresh fillings."
+                        data-details="The timeless triple-decker — toasted layers stacked with chicken, fresh lettuce, tomato, cheese, and a creamy spread. A café classic done right."
+                        data-tags="Poultry · Dairy · Gluten">
+                        <span class="item-name">Club Sandwich</span><span class="item-dots"></span><span
+                            class="item-price">530 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tuna Club Sandwich" data-price="560" data-category="Snack"
+                        data-icon="🥪" data-desc="Classic club sandwich loaded with tuna and fresh vegetables."
+                        data-details="Our club sandwich elevated with flaked tuna, crisp vegetables, and a light mayo spread between layers of golden toasted bread. Fresh and satisfying."
+                        data-tags="Fish · Dairy · Gluten">
+                        <span class="item-name">Tuna Club Sandwich</span><span class="item-dots"></span><span
+                            class="item-price">560 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chips" data-price="350" data-category="Snack" data-icon="🍟"
+                        data-desc="Crispy golden fried potato chips."
+                        data-details="Golden, crispy fried potato chips — perfectly salted and served hot. A great side or a satisfying snack on their own. Simple pleasures, done well."
+                        data-tags="Vegan · Gluten">
+                        <span class="item-name">Chips</span><span class="item-dots"></span><span class="item-price">350
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- PIZZA -->
+            <div id="pizza">
+                <div class="section-header">
+                    <div class="section-icon">🍕</div>
+                    <div class="section-label">Pizza<small>Stone-Baked Selections</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Special Pizza" data-price="700" data-category="Pizza"
+                        data-icon="🍕" data-desc="Yo Bar's signature pizza with a chef's selection of toppings."
+                        data-details="Our signature pizza loaded with the chef's special combination of toppings on a perfectly baked base. Every bite is a flavour surprise."
+                        data-tags="Gluten · Dairy · Signature">
+                        <span class="item-name">Special Pizza</span><span class="item-dots"></span><span
+                            class="item-price">700 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Super Special Pizza" data-price="850" data-category="Pizza"
+                        data-icon="🍕" data-desc="The ultimate loaded pizza with premium toppings."
+                        data-details="Our most indulgent pizza — piled high with a premium selection of toppings, extra cheese, and our house pizza sauce. The go-to for serious pizza lovers."
+                        data-tags="Gluten · Dairy · Premium">
+                        <span class="item-name">Super Special Pizza</span><span class="item-dots"></span><span
+                            class="item-price">850 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chicken Pizza" data-price="720" data-category="Pizza"
+                        data-icon="🍕" data-desc="Tender seasoned chicken on a tomato and cheese base."
+                        data-details="Juicy seasoned chicken pieces on a rich tomato sauce base, topped with generous mozzarella and aromatic herbs. A favourite for chicken lovers."
+                        data-tags="Gluten · Dairy · Poultry">
+                        <span class="item-name">Chicken Pizza</span><span class="item-dots"></span><span
+                            class="item-price">720 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tuna Special Pizza" data-price="750" data-category="Pizza"
+                        data-icon="🍕" data-desc="Flaked tuna on a creamy pizza base with Mediterranean herbs."
+                        data-details="Flaked tuna spread over a creamy base with capers, olives, and Mediterranean herbs. A distinctly fresh and savoury pizza experience."
+                        data-tags="Gluten · Dairy · Fish">
+                        <span class="item-name">Tuna Special Pizza</span><span class="item-dots"></span><span
+                            class="item-price">750 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Margherita Pizza" data-price="570" data-category="Pizza"
+                        data-icon="🍕" data-desc="Classic margherita with tomato, mozzarella, and fresh basil."
+                        data-details="The timeless Italian classic — vibrant tomato sauce, creamy melted mozzarella, and fresh basil leaves on a perfectly crisp base. Simple and always perfect."
+                        data-tags="Gluten · Dairy · Vegetarian">
+                        <span class="item-name">Margherita Pizza</span><span class="item-dots"></span><span
+                            class="item-price">570 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tuna Fasting Pizza" data-price="580" data-category="Pizza"
+                        data-icon="🍕" data-desc="Fasting-friendly tuna pizza without dairy cheese."
+                        data-details="A thoughtful fasting option — our tuna pizza prepared without dairy, featuring flaked tuna, tomato sauce, and herbs on a golden base. Flavourful and guilt-free."
+                        data-tags="Gluten · Fish · Fasting-Friendly">
+                        <span class="item-name">Tuna Fasting Pizza</span><span class="item-dots"></span><span
+                            class="item-price">580 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Vegetarian Pizza" data-price="450" data-category="Pizza"
+                        data-icon="🍕" data-desc="Colourful vegetable pizza with garden-fresh toppings."
+                        data-details="A vibrant pizza topped with a colourful selection of fresh garden vegetables on our house tomato sauce and melted cheese. Light, fresh, and deeply satisfying."
+                        data-tags="Gluten · Dairy · Vegetarian">
+                        <span class="item-name">Vegetarian Pizza</span><span class="item-dots"></span><span
+                            class="item-price">450 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div><!-- /sections-grid -->
+
+        <!-- ══════════════════════ ASIAN + PASTA ══════════════════════ -->
+        <div class="sec-divider" id="asian"><span>&#9670;</span></div>
+
+        <div class="sections-grid">
+
+            <!-- ASIAN FUSION -->
+            <div>
+                <div class="section-header">
+                    <div class="section-icon">🥢</div>
+                    <div class="section-label">Asian Fusion<small>International Flavours</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Special Noodles" data-price="650" data-category="Asian Fusion"
+                        data-icon="🍜" data-desc="Wok-tossed noodles with vegetables and house special sauce."
+                        data-details="Our signature noodle dish — stir-fried with a medley of vegetables, soy-based house sauce, and aromatic sesame oil. A crowd favourite that keeps guests coming back."
+                        data-tags="Gluten · Soy · Signature">
+                        <span class="item-name">Special Noodles</span><span class="item-dots"></span><span
+                            class="item-price">650 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chicken Noodles" data-price="630" data-category="Asian Fusion"
+                        data-icon="🍜" data-desc="Stir-fried noodles with tender chicken and Asian seasonings."
+                        data-details="Juicy chicken pieces tossed with silky noodles, crisp vegetables, and a savory Asian-inspired sauce. Satisfying, aromatic, and packed with flavour."
+                        data-tags="Gluten · Soy · Poultry">
+                        <span class="item-name">Chicken Noodles</span><span class="item-dots"></span><span
+                            class="item-price">630 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="European Combo" data-price="1000" data-category="Asian Fusion"
+                        data-icon="🍽️" data-desc="A mixed European-inspired platter with chef's selection."
+                        data-details="A sophisticated fusion platter drawing inspiration from European culinary traditions, assembled by our chef for a diverse and satisfying dining experience."
+                        data-tags="Dairy · Gluten · Meat">
+                        <span class="item-name">European Combo</span><span class="item-dots"></span><span
+                            class="item-price">1,000 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chicken Mexican" data-price="800" data-category="Asian Fusion"
+                        data-icon="🌮" data-desc="Spiced chicken with Mexican-style toppings and sides."
+                        data-details="Boldly seasoned chicken served with Mexican-inspired accompaniments — smoky spices, fresh salsa, and vibrant colours. A fiesta on your plate."
+                        data-tags="Poultry · Gluten · Spicy">
+                        <span class="item-name">Chicken Mexican</span><span class="item-dots"></span><span
+                            class="item-price">800 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Superme Spice Chicken" data-price="900"
+                        data-category="Asian Fusion" data-icon="🌶️"
+                        data-desc="Intensely spiced crispy chicken with a fiery kick."
+                        data-details="Not for the faint-hearted — our Superme Spice Chicken delivers bold, fiery crunch with layer upon layer of our signature spice blend. Crispy outside, juicy inside."
+                        data-tags="Poultry · Gluten · Very Spicy">
+                        <span class="item-name">Superme Spice Chicken</span><span class="item-dots"></span><span
+                            class="item-price">900 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Flank Steak" data-price="600" data-category="Asian Fusion"
+                        data-icon="🥩" data-desc="Grilled flank steak with seasoned sides."
+                        data-details="A well-marinated flank steak grilled to your preference and served with seasoned sides. Robust beefy flavour with a satisfying char from our grill."
+                        data-tags="Beef · Gluten-Free">
+                        <span class="item-name">Flank Steak</span><span class="item-dots"></span><span
+                            class="item-price">600 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chicken Fajita" data-price="800" data-category="Asian Fusion"
+                        data-icon="🌯" data-desc="Sizzling chicken strips with peppers and warm tortillas."
+                        data-details="Sizzling strips of marinated chicken served with colourful sautéed peppers and onions, accompanied by warm tortillas and fresh sides. A classic crowd-pleaser."
+                        data-tags="Poultry · Gluten · Spicy">
+                        <span class="item-name">Chicken Fajita</span><span class="item-dots"></span><span
+                            class="item-price">800 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Fried Chicken" data-price="900" data-category="Asian Fusion"
+                        data-icon="🍗" data-desc="Golden crispy fried chicken with dipping sauce."
+                        data-details="Perfectly seasoned and fried to a golden crisp — juicy on the inside with an irresistibly crunchy coating. Served with your choice of dipping sauce."
+                        data-tags="Poultry · Gluten">
+                        <span class="item-name">Fried Chicken</span><span class="item-dots"></span><span
+                            class="item-price">900 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Full Roast Chicken" data-price="3000" data-category="Asian Fusion"
+                        data-icon="🍗" data-desc="Whole slow-roasted chicken with herbs and sides — great for sharing."
+                        data-details="A whole chicken slow-roasted to golden perfection with aromatic herbs and spices. Ideal for sharing — juicy, flavourful, and a true showstopper at the table."
+                        data-tags="Poultry · Shareable">
+                        <span class="item-name">Full Roast Chicken</span><span class="item-dots"></span><span
+                            class="item-price">3,000 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Half Roast Chicken" data-price="1600" data-category="Asian Fusion"
+                        data-icon="🍗" data-desc="Half portion of our slow-roasted herb chicken."
+                        data-details="Half of our signature whole roast chicken — all the same incredible flavour and tenderness, in a portion perfect for one hungry diner."
+                        data-tags="Poultry">
+                        <span class="item-name">Half Roast Chicken</span><span class="item-dots"></span><span
+                            class="item-price">1,600 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- PASTA & RICE -->
+            <div id="pasta">
+                <div class="section-header">
+                    <div class="section-icon">🍝</div>
+                    <div class="section-label">Pasta &amp; Rice<small>Comforting Classics</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Meat Sauce Pasta" data-price="450"
+                        data-category="Pasta &amp; Rice" data-icon="🍝"
+                        data-desc="Al dente pasta in a rich slow-cooked meat sauce."
+                        data-details="Al dente pasta smothered in a rich, slow-simmered meat sauce seasoned with garlic, tomatoes, and aromatic herbs. A timeless comfort classic."
+                        data-tags="Gluten · Meat">
+                        <span class="item-name">Meat Sauce</span><span class="item-dots"></span><span
+                            class="item-price">450 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Vegetable Pasta" data-price="300" data-category="Pasta &amp; Rice"
+                        data-icon="🍝" data-desc="Pasta tossed with seasonal vegetables and olive oil."
+                        data-details="A light and fresh pasta dish tossed with colourful seasonal vegetables, garlic, and a drizzle of olive oil. Simple, wholesome, and delicious."
+                        data-tags="Gluten · Vegan">
+                        <span class="item-name">Vegetable</span><span class="item-dots"></span><span
+                            class="item-price">300 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tomato Sauce Pasta" data-price="300"
+                        data-category="Pasta &amp; Rice" data-icon="🍝"
+                        data-desc="Classic pasta in a fresh, tangy tomato and herb sauce."
+                        data-details="A pure and vibrant tomato sauce made from ripe tomatoes, garlic, and herbs served over perfectly cooked pasta. A beloved Italian-inspired staple."
+                        data-tags="Gluten · Vegan">
+                        <span class="item-name">Tomato Sauce</span><span class="item-dots"></span><span
+                            class="item-price">300 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tuna Sauce Pasta" data-price="480"
+                        data-category="Pasta &amp; Rice" data-icon="🍝"
+                        data-desc="Pasta with flaked tuna in a creamy Mediterranean sauce."
+                        data-details="Tender pasta combined with flaked tuna in a creamy, savoury sauce with capers and herbs. A satisfying Mediterranean-inspired dish."
+                        data-tags="Gluten · Fish · Dairy">
+                        <span class="item-name">Tuna Sauce</span><span class="item-dots"></span><span
+                            class="item-price">480 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Lazagna" data-price="650" data-category="Pasta &amp; Rice"
+                        data-icon="🍝" data-desc="Layered baked lasagna with meat, béchamel, and melted cheese."
+                        data-details="Classic baked lasagna with layers of tender pasta sheets, rich meat sauce, creamy béchamel, and melted cheese. Golden on top, hearty throughout — a true Italian comfort."
+                        data-tags="Gluten · Dairy · Meat">
+                        <span class="item-name">Lazagna</span><span class="item-dots"></span><span
+                            class="item-price">650 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div><!-- /sections-grid -->
+
+        <!-- ══════════════════════ JUICE + HOT DRINKS ══════════════════════ -->
+        <div class="sec-divider" id="juice"><span>&#9670;</span></div>
+
+        <div class="sections-grid">
+
+            <!-- JUICE -->
+            <div>
+                <div class="section-header">
+                    <div class="section-icon">🥤</div>
+                    <div class="section-label">Juice &amp; Shakes<small>Fresh &amp; Blended</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Yo Special Juice" data-price="220"
+                        data-category="Juice &amp; Shakes" data-icon="🥤"
+                        data-desc="Yo Bar's signature blend of fresh seasonal fruits."
+                        data-details="A secret blend of fresh seasonal fruits crafted by our juicers — vibrant, sweet, and bursting with natural goodness. Our house favourite."
+                        data-tags="Vegan · Fresh · Signature">
+                        <span class="item-name">Yo Special Juice</span><span class="item-dots"></span><span
+                            class="item-price">220 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Telebea Shake" data-price="160" data-category="Juice &amp; Shakes"
+                        data-icon="🥛" data-desc="Creamy telebea fruit shake — sweet and satisfying."
+                        data-details="A creamy, thick shake made from telebea fruit blended to silky perfection. Sweet, nourishing, and uniquely Ethiopian."
+                        data-tags="Dairy · Fresh">
+                        <span class="item-name">Telebea Shake</span><span class="item-dots"></span><span
+                            class="item-price">160 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Mixed Juice" data-price="200" data-category="Juice &amp; Shakes"
+                        data-icon="🥤" data-desc="Refreshing blend of multiple fresh seasonal fruits."
+                        data-details="A vibrant mix of freshly pressed seasonal fruits, layered or blended for a colourful and nutritious drink. Every glass is a little different."
+                        data-tags="Vegan · Fresh">
+                        <span class="item-name">Mixed Juice</span><span class="item-dots"></span><span
+                            class="item-price">200 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Chocolate Juice" data-price="240"
+                        data-category="Juice &amp; Shakes" data-icon="🍫"
+                        data-desc="Rich chocolate shake blended with milk."
+                        data-details="A decadent, thick chocolate shake made with rich cocoa and creamy milk. The ultimate treat for chocolate lovers of any age."
+                        data-tags="Dairy · Sweet">
+                        <span class="item-name">Chocolate Juice</span><span class="item-dots"></span><span
+                            class="item-price">240 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Protein Shake" data-price="200" data-category="Juice &amp; Shakes"
+                        data-icon="💪" data-desc="Energising protein-rich shake — great post-workout."
+                        data-details="A nourishing protein shake blended with wholesome ingredients to fuel your body. The smart choice after activity or a busy morning."
+                        data-tags="Dairy · Healthy">
+                        <span class="item-name">Protein Shake</span><span class="item-dots"></span><span
+                            class="item-price">200 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Avocado Juice" data-price="200" data-category="Juice &amp; Shakes"
+                        data-icon="🥑" data-desc="Thick and creamy fresh avocado juice."
+                        data-details="Pure, fresh avocado blended into a thick and luscious juice. Creamy, mild, and packed with natural healthy fats — an Ethiopian café staple."
+                        data-tags="Vegan · Healthy">
+                        <span class="item-name">Avocado</span><span class="item-dots"></span><span
+                            class="item-price">200 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Papaya Juice" data-price="200" data-category="Juice &amp; Shakes"
+                        data-icon="🍈" data-desc="Fresh papaya blended into a smooth, tropical juice."
+                        data-details="Ripe papaya blended smooth — sweet, tropical, and full of natural goodness. Light and refreshing with a distinctive tropical flavour."
+                        data-tags="Vegan · Fresh">
+                        <span class="item-name">Papaya</span><span class="item-dots"></span><span class="item-price">200
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Pineapple Juice" data-price="250"
+                        data-category="Juice &amp; Shakes" data-icon="🍍"
+                        data-desc="Sweet and tangy fresh pineapple juice."
+                        data-details="Freshly pressed pineapple juice — sweet, tangy, and bursting with tropical flavour. A bright, energising drink to lift your mood."
+                        data-tags="Vegan · Fresh">
+                        <span class="item-name">Pineapple</span><span class="item-dots"></span><span
+                            class="item-price">250 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Oreo Shake" data-price="320" data-category="Juice &amp; Shakes"
+                        data-icon="🍪" data-desc="Creamy blended Oreo cookie milkshake."
+                        data-details="Crushed Oreo cookies blended with creamy milk and ice cream into a thick, indulgent shake. A dessert in a glass that nobody can resist."
+                        data-tags="Dairy · Sweet">
+                        <span class="item-name">Oreo Shake</span><span class="item-dots"></span><span
+                            class="item-price">320 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Strawberry Shake" data-price="300"
+                        data-category="Juice &amp; Shakes" data-icon="🍓"
+                        data-desc="Sweet and creamy fresh strawberry milkshake."
+                        data-details="Fresh strawberries blended with creamy milk into a vibrant pink milkshake. Fruity, sweet, and utterly refreshing."
+                        data-tags="Dairy · Fresh">
+                        <span class="item-name">Strobery</span><span class="item-dots"></span><span
+                            class="item-price">300 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Ananas Juice" data-price="200" data-category="Juice &amp; Shakes"
+                        data-icon="🍍" data-desc="Fresh ananas (pineapple variety) blended juice."
+                        data-details="A refreshing blend of fresh ananas — light, tropical, and naturally sweet. A clean, thirst-quenching choice any time of day."
+                        data-tags="Vegan · Fresh">
+                        <span class="item-name">Ananas</span><span class="item-dots"></span><span class="item-price">200
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- HOT DRINKS -->
+            <div id="hotdrinks">
+                <div class="section-header">
+                    <div class="section-icon">☕</div>
+                    <div class="section-label">Hot Drinks<small>Coffee, Tea &amp; More</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Makiyato" data-price="100" data-category="Hot Drinks"
+                        data-icon="☕" data-desc="Ethiopian-style macchiato — espresso with a dash of milk."
+                        data-details="A beloved Ethiopian coffee ritual — a strong shot of espresso topped with a small amount of creamy milk. Bold, smooth, and deeply satisfying."
+                        data-tags="Dairy · Coffee · Signature">
+                        <span class="item-name">Makiyato</span><span class="item-dots"></span><span
+                            class="item-price">100 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Coffee" data-price="80" data-category="Hot Drinks" data-icon="☕"
+                        data-desc="Classic Ethiopian black coffee."
+                        data-details="Our house black coffee — brewed fresh from quality Ethiopian beans. Strong, aromatic, and the cornerstone of our beverage menu."
+                        data-tags="Coffee · Vegan">
+                        <span class="item-name">Coffee</span><span class="item-dots"></span><span class="item-price">80
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Special Tea" data-price="150" data-category="Hot Drinks"
+                        data-icon="🍵" data-desc="Aromatic blended herbal or spiced special tea."
+                        data-details="Our house special tea — a carefully blended aromatic brew with warming spices and herbal notes. Each cup is a little moment of calm."
+                        data-tags="Tea · Vegan">
+                        <span class="item-name">Special Tea</span><span class="item-dots"></span><span
+                            class="item-price">150 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Cappuccino" data-price="110" data-category="Hot Drinks"
+                        data-icon="☕" data-desc="Espresso topped with steamed milk and silky foam."
+                        data-details="Classic Italian cappuccino — a shot of rich espresso crowned with velvety steamed milk and a thick layer of silky foam. The perfect coffee moment."
+                        data-tags="Dairy · Coffee">
+                        <span class="item-name">Cappuccino</span><span class="item-dots"></span><span
+                            class="item-price">110 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Latte" data-price="100" data-category="Hot Drinks" data-icon="☕"
+                        data-desc="Smooth espresso with steamed milk — mild and creamy."
+                        data-details="A smooth, mild coffee drink made from espresso and a generous pour of steamed milk. Creamy, gentle, and endlessly comforting."
+                        data-tags="Dairy · Coffee">
+                        <span class="item-name">Latte</span><span class="item-dots"></span><span class="item-price">100
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Keshir" data-price="60" data-category="Hot Drinks" data-icon="🍵"
+                        data-desc="Traditional Ethiopian spiced herbal infusion."
+                        data-details="A soothing traditional Ethiopian herbal drink. Warm, mildly spiced, and wonderfully gentle — an affordable cup of local comfort."
+                        data-tags="Tea · Vegan · Traditional">
+                        <span class="item-name">Keshir</span><span class="item-dots"></span><span class="item-price">60
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tea" data-price="50" data-category="Hot Drinks" data-icon="🍵"
+                        data-desc="Classic hot black tea."
+                        data-details="Simple, honest black tea brewed hot and served fresh. The most straightforward comfort in a cup — always a reliable choice."
+                        data-tags="Tea · Vegan">
+                        <span class="item-name">Tea</span><span class="item-dots"></span><span class="item-price">50
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Tea with Lemon" data-price="80" data-category="Hot Drinks"
+                        data-icon="🍋" data-desc="Hot black tea brightened with a squeeze of fresh lemon."
+                        data-details="Hot black tea served with a wedge of fresh lemon — bright, refreshing, and naturally cleansing. A great choice when you need something light and warm."
+                        data-tags="Tea · Vegan">
+                        <span class="item-name">Tea with Lemon</span><span class="item-dots"></span><span
+                            class="item-price">80 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Nut Tea" data-price="100" data-category="Hot Drinks"
+                        data-icon="🌰" data-desc="Warm herbal nut-infused tea — rich and nourishing."
+                        data-details="A warming, aromatic tea infused with nuts for a rich, earthy flavour. Nourishing, filling, and a uniquely satisfying hot drink experience."
+                        data-tags="Tea · Vegan">
+                        <span class="item-name">Nut Tea</span><span class="item-dots"></span><span
+                            class="item-price">100 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Ice Coffee" data-price="200" data-category="Hot Drinks"
+                        data-icon="🧊" data-desc="Chilled coffee served over ice — smooth and refreshing."
+                        data-details="Strong brewed coffee poured over ice and served cold — smooth, bold, and perfect for warmer days when you still need your coffee fix."
+                        data-tags="Dairy · Coffee · Cold">
+                        <span class="item-name">Ice Coffee</span><span class="item-dots"></span><span
+                            class="item-price">200 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Hot Chocolate" data-price="200" data-category="Hot Drinks"
+                        data-icon="🍫" data-desc="Rich, creamy hot chocolate — a warm indulgence."
+                        data-details="Velvety hot chocolate made from rich cocoa and steamed creamy milk. A warm, indulgent hug in a mug — perfect for any time of day."
+                        data-tags="Dairy · Sweet">
+                        <span class="item-name">Hot Chocholet</span><span class="item-dots"></span><span
+                            class="item-price">200 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Hot Caramel" data-price="200" data-category="Hot Drinks"
+                        data-icon="🍯" data-desc="Warm, sweet caramel-flavoured drink with steamed milk."
+                        data-details="A warm, sweet drink infused with rich caramel and creamy steamed milk. Smooth, indulgent, and wonderfully comforting."
+                        data-tags="Dairy · Sweet">
+                        <span class="item-name">Hot Caramel</span><span class="item-dots"></span><span
+                            class="item-price">200 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Jebena Coffee" data-price="60" data-category="Hot Drinks"
+                        data-icon="🫖" data-desc="Traditional Ethiopian jebena-brewed coffee ceremony cup."
+                        data-details="Coffee brewed the traditional Ethiopian way in a clay jebena pot — served in small cups with popcorn as is customary. A true cultural experience in every sip."
+                        data-tags="Coffee · Vegan · Traditional · Ceremony">
+                        <span class="item-name">Jebena Coffee</span><span class="item-dots"></span><span
+                            class="item-price">60 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div><!-- /sections-grid -->
+
+        <!-- ══════════════════════ COLD DRINKS + FISH + SALADS ══════════════════════ -->
+        <div class="sec-divider" id="colddrinks"><span>&#9670;</span></div>
+
+        <div class="sections-grid">
+
+            <!-- COLD DRINKS -->
+            <div>
+                <div class="section-header">
+                    <div class="section-icon">🍺</div>
+                    <div class="section-label">Cold Drinks<small>Refreshments</small></div>
+                </div>
+                <ul class="menu-list">
+                    <li class="menu-item" data-title="Soft Drinks" data-price="80" data-category="Cold Drinks"
+                        data-icon="🥤" data-desc="Chilled assorted sodas and soft drinks."
+                        data-details="A selection of chilled sodas and soft drinks. Ask your server for available flavours — always served ice-cold."
+                        data-tags="Non-Alcoholic">
+                        <span class="item-name">Soft Drinks</span><span class="item-dots"></span><span
+                            class="item-price">80 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Beer" data-price="140" data-category="Cold Drinks" data-icon="🍺"
+                        data-desc="Cold local or imported beer served in a chilled glass."
+                        data-details="Enjoy a cold, refreshing beer — locally brewed or imported — served ice-cold. The perfect companion to any of our meals. Ask for today's selection."
+                        data-tags="Alcohol · Gluten">
+                        <span class="item-name">Beer</span><span class="item-dots"></span><span class="item-price">140
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="1L Water" data-price="70" data-category="Cold Drinks"
+                        data-icon="💧" data-desc="Chilled 1-litre bottled mineral water."
+                        data-details="A large 1-litre bottle of pure, chilled mineral water to keep you refreshed throughout your meal. The sensible choice."
+                        data-tags="Non-Alcoholic">
+                        <span class="item-name">1lt Water</span><span class="item-dots"></span><span
+                            class="item-price">70 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="0.5L Water" data-price="60" data-category="Cold Drinks"
+                        data-icon="💧" data-desc="Chilled 500ml bottled mineral water."
+                        data-details="A standard 500ml bottle of pure, chilled mineral water — perfect for lighter sipping alongside your meal."
+                        data-tags="Non-Alcoholic">
+                        <span class="item-name">0.5 Water</span><span class="item-dots"></span><span
+                            class="item-price">60 birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Sinq" data-price="130" data-category="Cold Drinks" data-icon="🍯"
+                        data-desc="Traditional Ethiopian fermented honey wine."
+                        data-details="A traditional Ethiopian beverage made from fermented honey — mildly sweet, naturally carbonated, and uniquely satisfying. A true taste of Ethiopian culture."
+                        data-tags="Alcohol · Traditional">
+                        <span class="item-name">Sinq</span><span class="item-dots"></span><span class="item-price">130
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                    <li class="menu-item" data-title="Nigus" data-price="120" data-category="Cold Drinks" data-icon="🥂"
+                        data-desc="Premium Ethiopian chilled beverage."
+                        data-details="A premium Ethiopian cold drink — smooth, satisfying, and refreshing. The perfect companion to round off your dining experience at Yo Bar & Restaurant."
+                        data-tags="Non-Alcoholic">
+                        <span class="item-name">Nigus</span><span class="item-dots"></span><span class="item-price">120
+                            birr</span><span class="item-tap">tap ›</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- FISH CORNER + SALADS stacked -->
+            <div>
+                <div id="fish">
+                    <div class="section-header">
+                        <div class="section-icon">🐟</div>
+                        <div class="section-label">Fish Corner<small>From the Sea</small></div>
+                    </div>
+                    <ul class="menu-list">
+                        <li class="menu-item" data-title="Fish Goulash" data-price="500" data-category="Fish Corner"
+                            data-icon="🐟" data-desc="Tender fish in a rich, spiced goulash sauce."
+                            data-details="Flaky fish cooked in a rich, paprika-spiced goulash sauce with onions and tomatoes. A warming, deeply flavoured dish that bridges Ethiopian and European traditions."
+                            data-tags="Fish · Gluten-Free">
+                            <span class="item-name">Fish Goulash</span><span class="item-dots"></span><span
+                                class="item-price">500 birr</span><span class="item-tap">tap ›</span>
+                        </li>
+                        <li class="menu-item" data-title="Fish Lebleb" data-price="480" data-category="Fish Corner"
+                            data-icon="🐟" data-desc="Fish cooked with chickpeas and Ethiopian spices."
+                            data-details="A unique combination of flaky fish cooked with tender chickpeas (lebleb) and seasoned with Ethiopian spices. Hearty, wholesome, and full of character."
+                            data-tags="Fish · Protein-Rich">
+                            <span class="item-name">Fish Lebleb</span><span class="item-dots"></span><span
+                                class="item-price">480 birr</span><span class="item-tap">tap ›</span>
+                        </li>
+                        <li class="menu-item" data-title="Fish Cutlet" data-price="500" data-category="Fish Corner"
+                            data-icon="🐟" data-desc="Crispy seasoned fish cutlets, golden and crunchy."
+                            data-details="Seasoned fish portions coated in a crispy breadcrumb crust and fried to golden perfection. Crunchy on the outside, tender and flaky within."
+                            data-tags="Fish · Gluten">
+                            <span class="item-name">Fish Cutlet</span><span class="item-dots"></span><span
+                                class="item-price">500 birr</span><span class="item-tap">tap ›</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="salads" style="margin-top:40px;">
+                    <div class="section-header">
+                        <div class="section-icon">🥗</div>
+                        <div class="section-label">Salads<small>Fresh &amp; Light</small></div>
+                    </div>
+                    <ul class="menu-list">
+                        <li class="menu-item" data-title="Special Salad" data-price="550" data-category="Salads"
+                            data-icon="🥗" data-desc="Chef's special salad with premium ingredients and house dressing."
+                            data-details="Our chef's signature salad — a generous bowl of premium seasonal vegetables, toppings, and a specially crafted house dressing. Fresh, vibrant, and deeply satisfying."
+                            data-tags="Vegetarian · Fresh · Signature">
+                            <span class="item-name">Special Salad</span><span class="item-dots"></span><span
+                                class="item-price">550 birr</span><span class="item-tap">tap ›</span>
+                        </li>
+                        <li class="menu-item" data-title="Mixed Salad" data-price="350" data-category="Salads"
+                            data-icon="🥗" data-desc="Fresh mixed seasonal vegetable salad."
+                            data-details="A colourful, refreshing mix of fresh seasonal vegetables tossed in a light dressing. Simple, clean, and the perfect accompaniment to any main course."
+                            data-tags="Vegan · Fresh">
+                            <span class="item-name">Mixed Salad</span><span class="item-dots"></span><span
+                                class="item-price">350 birr</span><span class="item-tap">tap ›</span>
+                        </li>
+                        <li class="menu-item" data-title="Tuna Salad" data-price="600" data-category="Salads"
+                            data-icon="🥗"
+                            data-desc="Fresh salad loaded with flaked tuna and Mediterranean-style dressing."
+                            data-details="A hearty salad featuring generous flaked tuna over a bed of fresh vegetables with a Mediterranean-inspired dressing. Protein-rich, fresh, and fully satisfying."
+                            data-tags="Fish · Fresh · Protein-Rich">
+                            <span class="item-name">Tuna Salad</span><span class="item-dots"></span><span
+                                class="item-price">600 birr</span><span class="item-tap">tap ›</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div><!-- /sections-grid -->
+
+    </main>
+
+    <!-- ══════════════════════ FOOTER ══════════════════════ -->
+    <footer>
+        <div class="footer-logo">Yo Bar &amp; Restaurant</div>
+        <div class="footer-tagline">Feels Every Thing</div>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Visit Us</h4>
+                <p>Nazreth (Adama)</p>
+                <p>Oromia, Ethiopia</p>
+            </div>
+            <div class="footer-col">
+                <h4>Opening Hours</h4>
+                <p>Every Day</p>
+                <p>Morning to Late Night</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Ask staff for details</p>
+            </div>
+        </div>
+        <div class="footer-copy">&copy; 2026 Yo Bar &amp; Restaurant &nbsp;·&nbsp; All Rights Reserved</div>
+    </footer>
+
+    <!-- ══════════════════════ MODAL ══════════════════════ -->
+    <div class="modal-backdrop" id="modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+            <div class="modal-img-strip">
+                <div class="modal-plate-icon" id="modalIcon">🍽️</div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-category" id="modalCat">Category</div>
+                <div class="modal-title" id="modalTitle">Dish Name</div>
+                <div class="modal-price-tag">
+                    <span id="modalPrice">0</span>
+                    <small>Ethiopian Birr</small>
+                </div>
+                <p class="modal-desc" id="modalDesc">Short description.</p>
+                <div class="modal-divider"></div>
+                <div class="modal-section-label">Chef's Notes</div>
+                <p class="modal-details" id="modalDetails">Full details here.</p>
+                <div class="modal-divider"></div>
+                <div class="modal-section-label">Dietary Info</div>
+                <div class="modal-tags" id="modalTags"></div>
+            </div>
+        </div>
     </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Dulet" data-price="450" data-category="Breakfast" data-icon="🍳"
-        data-desc="Minced tripe, liver, and lean meat sautéed with berbere and niter kibbeh."
-        data-details="A beloved Ethiopian breakfast specialty — finely minced tripe, liver, and lean beef pan-fried with berbere spice, onions, and clarified spiced butter. Rich, bold, and deeply satisfying."
-        data-tags="Meat · Spicy">
-        <span class="item-name">Dulet</span><span class="item-dots"></span><span class="item-price">450 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Firfir" data-price="280" data-category="Breakfast" data-icon="🫓"
-        data-desc="Torn injera stir-fried with berbere sauce and spiced butter."
-        data-details="Classic Ethiopian breakfast of shredded injera cooked with berbere sauce and niter kibbeh, creating a hearty, warming dish packed with traditional flavours."
-        data-tags="Gluten · Spicy">
-        <span class="item-name">Firfir</span><span class="item-dots"></span><span class="item-price">280 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tibes Firfir" data-price="450" data-category="Breakfast" data-icon="🥩"
-        data-desc="Firfir topped with tender sautéed beef tibs."
-        data-details="A satisfying combination of classic firfir enriched with juicy sautéed beef tibs, seasoned with rosemary, onions, and Ethiopian spices for a fuller morning meal."
-        data-tags="Meat · Gluten · Spicy">
-        <span class="item-name">Tibes Firfir</span><span class="item-dots"></span><span class="item-price">450 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Kuanta Firfir" data-price="480" data-category="Breakfast" data-icon="🥩"
-        data-desc="Injera firfir with richly spiced dried cured beef."
-        data-details="Traditional firfir elevated with kuanta — richly spiced dried cured beef — folded into berbere-seasoned injera. An authentic taste of Ethiopian highland cuisine."
-        data-tags="Meat · Gluten · Spicy">
-        <span class="item-name">Kuanta Firfir</span><span class="item-dots"></span><span class="item-price">480 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Atekelet Firfir" data-price="300" data-category="Breakfast" data-icon="🥦"
-        data-desc="Vegetarian firfir with mixed seasonal vegetables."
-        data-details="A fasting-friendly firfir made with colourful seasonal vegetables, berbere, and injera. Light yet flavourful — perfect for a plant-based morning start."
-        data-tags="Vegan · Fasting-Friendly">
-        <span class="item-name">Atekelet Firfir</span><span class="item-dots"></span><span class="item-price">300 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chechebsa" data-price="270" data-category="Breakfast" data-icon="🫓"
-        data-desc="Shredded flatbread with spiced butter and berbere."
-        data-details="A traditional Oromo breakfast made from pan-fried flatbread torn and mixed with niter kibbeh and berbere. Comforting, aromatic, and deeply rooted in Ethiopian culture."
-        data-tags="Dairy · Gluten">
-        <span class="item-name">Chechebsa</span><span class="item-dots"></span><span class="item-price">270 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Special Chechebsa" data-price="350" data-category="Breakfast" data-icon="🫓"
-        data-desc="Premium chechebsa with extra niter kibbeh and a richer spice blend."
-        data-details="Our chef's upgraded version of chechebsa, featuring extra niter kibbeh, a richer berbere blend, and garnished with fresh herbs for a more indulgent morning experience."
-        data-tags="Dairy · Gluten">
-        <span class="item-name">Special Chechebsa</span><span class="item-dots"></span><span class="item-price">350 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Kinche" data-price="280" data-category="Breakfast" data-icon="🫙"
-        data-desc="Cracked wheat porridge finished with spiced butter."
-        data-details="A wholesome Ethiopian porridge made from cracked wheat or barley, slow-cooked and finished with a generous drizzle of niter kibbeh. Simple, nourishing, and delicious."
-        data-tags="Gluten · Dairy">
-        <span class="item-name">Kinche</span><span class="item-dots"></span><span class="item-price">280 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Omlet" data-price="270" data-category="Breakfast" data-icon="🍳"
-        data-desc="Classic fluffy omelette seasoned to perfection."
-        data-details="A golden, fluffy omelette prepared with fresh eggs and perfectly seasoned. A reliable and satisfying breakfast staple at Yo Bar & Restaurant."
-        data-tags="Eggs · Dairy">
-        <span class="item-name">Omlet</span><span class="item-dots"></span><span class="item-price">270 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Egg Scrambler" data-price="280" data-category="Breakfast" data-icon="🍳"
-        data-desc="Soft scrambled eggs with onions, tomatoes, and spices."
-        data-details="Fresh eggs scrambled with diced onions, ripe tomatoes, and aromatic spices. Light, satisfying, and ready in minutes — a morning favourite."
-        data-tags="Eggs">
-        <span class="item-name">Egg Scrambler</span><span class="item-dots"></span><span class="item-price">280 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Special Omlet" data-price="400" data-category="Breakfast" data-icon="🍳"
-        data-desc="Loaded omelette with vegetables, cheese, and premium fillings."
-        data-details="Our upgraded omelette bursting with sautéed vegetables, cheese, and extra fillings. A hearty, protein-packed breakfast that keeps you going all morning."
-        data-tags="Eggs · Dairy">
-        <span class="item-name">Special Omlet</span><span class="item-dots"></span><span class="item-price">400 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Egg with Meat" data-price="400" data-category="Breakfast" data-icon="🍳"
-        data-desc="Fresh eggs cooked alongside tender seasoned meat."
-        data-details="A filling combination of fresh eggs prepared alongside seasoned sautéed meat — the perfect protein-rich breakfast to fuel a full day."
-        data-tags="Eggs · Meat">
-        <span class="item-name">Egg with Meat</span><span class="item-dots"></span><span class="item-price">400 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Combo" data-price="650" data-category="Breakfast" data-icon="🍽️"
-        data-desc="A generous breakfast combination of multiple traditional items."
-        data-details="The ultimate Yo breakfast combination — a well-rounded plate featuring a selection of our favourite traditional breakfast dishes served together for maximum satisfaction."
-        data-tags="Meat · Dairy · Gluten">
-        <span class="item-name">Combo</span><span class="item-dots"></span><span class="item-price">650 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Fasting Combo" data-price="550" data-category="Breakfast" data-icon="🌿"
-        data-desc="Plant-based fasting breakfast combination platter."
-        data-details="A beautifully assembled fasting platter with a variety of plant-based Ethiopian breakfast items — perfect for fasting days or those preferring a vegan meal."
-        data-tags="Vegan · Fasting-Friendly">
-        <span class="item-name">Fasting Combo</span><span class="item-dots"></span><span class="item-price">550 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Fetira" data-price="370" data-category="Breakfast" data-icon="🫓"
-        data-desc="Crispy Ethiopian flatbread drizzled with honey or spiced butter."
-        data-details="A thin, crispy pan-fried bread served warm with honey or niter kibbeh. A beloved Ethiopian street-food breakfast that's simple, sweet, and utterly delicious."
-        data-tags="Gluten · Dairy">
-        <span class="item-name">Fetira</span><span class="item-dots"></span><span class="item-price">370 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Yebet Keta" data-price="200" data-category="Breakfast" data-icon="☕"
-        data-desc="Light homestyle morning dish — simple and affordable."
-        data-details="A light, affordable homestyle breakfast option. Quick, comforting, and perfect for a simple start to the morning at a great price."
-        data-tags="Light">
-        <span class="item-name">Yebet Keta</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Eggs with Avocado" data-price="370" data-category="Breakfast" data-icon="🥑"
-        data-desc="Fresh eggs served with creamy sliced avocado."
-        data-details="A modern breakfast favourite — perfectly cooked eggs paired with fresh, creamy avocado. Nutritious, satisfying, and beautifully presented."
-        data-tags="Eggs · Healthy">
-        <span class="item-name">Eggs with Avocado</span><span class="item-dots"></span><span class="item-price">370 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
 
-  <!-- LUNCH -->
-  <div id="lunch">
-    <div class="section-header">
-      <div class="section-icon">🍲</div>
-      <div class="section-label">Lunch<small>Traditional Favourites</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="LAMP Tibes" data-price="650" data-category="Lunch" data-icon="🐑"
-        data-desc="Tender lamb pieces sautéed with rosemary, onions, and jalapeños."
-        data-details="Succulent lamb cut into generous pieces and sautéed with rosemary, onions, jalapeños, and niter kibbeh. A robust and flavourful centrepiece of Ethiopian cuisine."
-        data-tags="Lamb · Spicy">
-        <span class="item-name">LAMP Tibes</span><span class="item-dots"></span><span class="item-price">650 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Fillet Tibes" data-price="600" data-category="Lunch" data-icon="🥩"
-        data-desc="Premium beef fillet tibs with onions, tomatoes, and herbs."
-        data-details="Choice cuts of beef fillet stir-fried with onions, tomatoes, jalapeños, and rosemary in spiced butter. Tender, juicy, and full of bold Ethiopian flavour."
-        data-tags="Beef · Spicy">
-        <span class="item-name">Fillet Tibes</span><span class="item-dots"></span><span class="item-price">600 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Traditional Combo" data-price="1700" data-category="Lunch" data-icon="🍽️"
-        data-desc="A grand platter of traditional Ethiopian meat and vegetable stews."
-        data-details="The ultimate Ethiopian feast — a large injera-lined platter topped with a curated selection of meat and vegetable stews, representing the very best of our traditional kitchen."
-        data-tags="Meat · Gluten · Shareable">
-        <span class="item-name">Traditional Combo</span><span class="item-dots"></span><span class="item-price">1,700 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Hafe Combo" data-price="1050" data-category="Lunch" data-icon="🍽️"
-        data-desc="Half-portion traditional combo platter — great for solo diners."
-        data-details="All the variety of our Traditional Combo in a smaller, more manageable portion. Ideal for solo diners wanting a taste of everything without the full serving."
-        data-tags="Meat · Gluten">
-        <span class="item-name">Hafe Combo</span><span class="item-dots"></span><span class="item-price">1,050 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Shiro" data-price="280" data-category="Lunch" data-icon="🫙"
-        data-desc="Smooth spiced chickpea stew served with injera."
-        data-details="A comforting Ethiopian staple — finely ground chickpea flour simmered into a rich, velvety stew seasoned with berbere, garlic, and onions. Fasting-friendly and deeply satisfying."
-        data-tags="Vegan · Fasting-Friendly">
-        <span class="item-name">Shiro</span><span class="item-dots"></span><span class="item-price">280 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tegabino" data-price="320" data-category="Lunch" data-icon="🫙"
-        data-desc="Shiro served piping hot in a traditional clay pot."
-        data-details="Shiro served in a traditional clay pot (tegabino), keeping it piping hot and enhancing the earthy flavours. A rustic, authentic way to enjoy this beloved dish."
-        data-tags="Vegan · Fasting-Friendly">
-        <span class="item-name">Tegabino</span><span class="item-dots"></span><span class="item-price">320 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Bozena Shiro" data-price="450" data-category="Lunch" data-icon="🫙"
-        data-desc="Chickpea stew enriched with tender meat pieces."
-        data-details="Elevated shiro stew studded with tender chunks of meat, adding richness and depth. A hearty option for meat lovers who also love their shiro."
-        data-tags="Meat · Gluten">
-        <span class="item-name">Bozena Shiro</span><span class="item-dots"></span><span class="item-price">450 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Agelegel" data-price="1500" data-category="Lunch" data-icon="🧺"
-        data-desc="Traditional multi-layer injera meal in a woven basket."
-        data-details="A beautiful traditional presentation: layered injera filled with an assortment of stews and toppings, packed into a woven basket. A complete and celebratory Ethiopian meal."
-        data-tags="Meat · Gluten · Shareable">
-        <span class="item-name">Agelegel</span><span class="item-dots"></span><span class="item-price">1,500 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Half Agelegel" data-price="850" data-category="Lunch" data-icon="🧺"
-        data-desc="Half-portion of the traditional injera basket meal."
-        data-details="The beloved Agelegel experience in a smaller portion — perfect for individuals or couples wanting the authentic layered injera basket without the full serving."
-        data-tags="Meat · Gluten">
-        <span class="item-name">Half Agelegel</span><span class="item-dots"></span><span class="item-price">850 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Keywet" data-price="450" data-category="Lunch" data-icon="🍲"
-        data-desc="Slow-simmered red beef stew with berbere and niter kibbeh."
-        data-details="A cornerstone of Ethiopian cuisine — beef slow-cooked in a deeply spiced berbere and niter kibbeh sauce until fall-apart tender. Rich, fragrant, and utterly irresistible."
-        data-tags="Beef · Spicy · Gluten">
-        <span class="item-name">Keywet</span><span class="item-dots"></span><span class="item-price">450 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Gomen Besga" data-price="450" data-category="Lunch" data-icon="🥬"
-        data-desc="Collard greens cooked with beef and Ethiopian spices."
-        data-details="Tender collard greens sautéed with seasoned beef pieces and aromatic spices. A wholesome dish that balances greens and meat in perfect harmony."
-        data-tags="Beef · Greens">
-        <span class="item-name">Gomen Besga</span><span class="item-dots"></span><span class="item-price">450 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Fasting Combo" data-price="650" data-category="Lunch" data-icon="🌿"
-        data-desc="Assorted plant-based fasting dishes on a shared injera platter."
-        data-details="A vibrant fasting platter featuring an assortment of plant-based stews and salads served on injera. Colourful, nourishing, and a celebration of Ethiopian fasting cuisine."
-        data-tags="Vegan · Fasting-Friendly · Gluten">
-        <span class="item-name">Fasting Combo</span><span class="item-dots"></span><span class="item-price">650 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
+    <script>
+         // Mobile Menu Logic
+        const menuToggle = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        const navLinks = document.querySelectorAll('nav a');
 
-</div><!-- /sections-grid -->
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
 
-<!-- ══════════════════════ SNACK + PIZZA ══════════════════════ -->
-<div class="sec-divider" id="snack"><span>&#9670;</span></div>
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+            });
+        });
+        // Navbar scroll highlight
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            header.style.boxShadow = window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,0.5)' : 'none';
+        });
 
-<div class="sections-grid">
+        // Modal logic
+        const modal = document.getElementById('modal');
+        const modalClose = document.getElementById('modalClose');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalCat = document.getElementById('modalCat');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalDetails = document.getElementById('modalDetails');
+        const modalTags = document.getElementById('modalTags');
 
-  <!-- SNACK -->
-  <div>
-    <div class="section-header">
-      <div class="section-icon">🍔</div>
-      <div class="section-label">Snack<small>Burgers &amp; Sandwiches</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Yo Special Burger" data-price="530" data-category="Snack" data-icon="🍔"
-        data-desc="Yo Bar's signature house burger with special sauce."
-        data-details="Our signature house burger — a juicy seasoned patty layered with our special Yo sauce, fresh vegetables, and toasted bun. The one that started it all."
-        data-tags="Gluten · Meat · Signature">
-        <span class="item-name">Yo Special Burger</span><span class="item-dots"></span><span class="item-price">530 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Yo Feshta Burger" data-price="700" data-category="Snack" data-icon="🍔"
-        data-desc="Premium loaded burger — the Yo celebration burger."
-        data-details="Our premium celebration burger stacked with extra fillings, double sauce, and everything that makes a burger unforgettable. Order this for a reason to feast."
-        data-tags="Gluten · Meat · Premium">
-        <span class="item-name">Yo Feshta Burger</span><span class="item-dots"></span><span class="item-price">700 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Big Burger" data-price="580" data-category="Snack" data-icon="🍔"
-        data-desc="A generous double-patty burger with all the trimmings."
-        data-details="Go big or go home — a generously sized burger with a thick, juicy patty, crisp lettuce, tomatoes, pickles, and a rich house sauce on a sesame bun."
-        data-tags="Gluten · Meat">
-        <span class="item-name">Big Burger</span><span class="item-dots"></span><span class="item-price">580 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chicken Shewarema" data-price="580" data-category="Snack" data-icon="🌯"
-        data-desc="Spiced shawarma-style chicken wrap with fresh vegetables."
-        data-details="Marinated and slow-roasted chicken carved into a soft wrap with garlic sauce, fresh tomatoes, and crunchy vegetables. Middle Eastern-inspired street food perfection."
-        data-tags="Poultry · Gluten">
-        <span class="item-name">Chicken Shewarema</span><span class="item-dots"></span><span class="item-price">580 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Egg Sandwich" data-price="370" data-category="Snack" data-icon="🥚"
-        data-desc="Fresh egg sandwich on toasted bread with vegetables."
-        data-details="A satisfying egg sandwich layered with fresh vegetables on toasted bread. Simple, affordable, and always delicious — a quick snack favourite."
-        data-tags="Eggs · Gluten">
-        <span class="item-name">Egg Sandwich</span><span class="item-dots"></span><span class="item-price">370 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Vegetable Sandwich" data-price="350" data-category="Snack" data-icon="🥗"
-        data-desc="Fresh garden vegetable sandwich on toasted bread."
-        data-details="A light and fresh sandwich packed with crisp garden vegetables and a house dressing. Perfect for a light snack or fasting-friendly bite."
-        data-tags="Vegetarian · Gluten">
-        <span class="item-name">Vegetable Sandwich</span><span class="item-dots"></span><span class="item-price">350 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Club Sandwich" data-price="530" data-category="Snack" data-icon="🥪"
-        data-desc="Classic triple-decker club sandwich with chicken and fresh fillings."
-        data-details="The timeless triple-decker — toasted layers stacked with chicken, fresh lettuce, tomato, cheese, and a creamy spread. A café classic done right."
-        data-tags="Poultry · Dairy · Gluten">
-        <span class="item-name">Club Sandwich</span><span class="item-dots"></span><span class="item-price">530 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tuna Club Sandwich" data-price="560" data-category="Snack" data-icon="🥪"
-        data-desc="Classic club sandwich loaded with tuna and fresh vegetables."
-        data-details="Our club sandwich elevated with flaked tuna, crisp vegetables, and a light mayo spread between layers of golden toasted bread. Fresh and satisfying."
-        data-tags="Fish · Dairy · Gluten">
-        <span class="item-name">Tuna Club Sandwich</span><span class="item-dots"></span><span class="item-price">560 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chips" data-price="350" data-category="Snack" data-icon="🍟"
-        data-desc="Crispy golden fried potato chips."
-        data-details="Golden, crispy fried potato chips — perfectly salted and served hot. A great side or a satisfying snack on their own. Simple pleasures, done well."
-        data-tags="Vegan · Gluten">
-        <span class="item-name">Chips</span><span class="item-dots"></span><span class="item-price">350 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
+        function openModal(el) {
+            modalIcon.textContent = el.dataset.icon || '🍽️';
+            modalCat.textContent = el.dataset.category || '';
+            modalTitle.textContent = el.dataset.title || '';
+            modalPrice.textContent = Number(el.dataset.price).toLocaleString() + ' birr';
+            modalDesc.textContent = el.dataset.desc || '';
+            modalDetails.textContent = el.dataset.details || '';
+            // Tags
+            modalTags.innerHTML = '';
+            (el.dataset.tags || '').split('·').forEach(t => {
+                const tag = document.createElement('span');
+                tag.className = 'modal-tag';
+                tag.textContent = t.trim();
+                modalTags.appendChild(tag);
+            });
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
 
-  <!-- PIZZA -->
-  <div id="pizza">
-    <div class="section-header">
-      <div class="section-icon">🍕</div>
-      <div class="section-label">Pizza<small>Stone-Baked Selections</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Special Pizza" data-price="700" data-category="Pizza" data-icon="🍕"
-        data-desc="Yo Bar's signature pizza with a chef's selection of toppings."
-        data-details="Our signature pizza loaded with the chef's special combination of toppings on a perfectly baked base. Every bite is a flavour surprise."
-        data-tags="Gluten · Dairy · Signature">
-        <span class="item-name">Special Pizza</span><span class="item-dots"></span><span class="item-price">700 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Super Special Pizza" data-price="850" data-category="Pizza" data-icon="🍕"
-        data-desc="The ultimate loaded pizza with premium toppings."
-        data-details="Our most indulgent pizza — piled high with a premium selection of toppings, extra cheese, and our house pizza sauce. The go-to for serious pizza lovers."
-        data-tags="Gluten · Dairy · Premium">
-        <span class="item-name">Super Special Pizza</span><span class="item-dots"></span><span class="item-price">850 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chicken Pizza" data-price="720" data-category="Pizza" data-icon="🍕"
-        data-desc="Tender seasoned chicken on a tomato and cheese base."
-        data-details="Juicy seasoned chicken pieces on a rich tomato sauce base, topped with generous mozzarella and aromatic herbs. A favourite for chicken lovers."
-        data-tags="Gluten · Dairy · Poultry">
-        <span class="item-name">Chicken Pizza</span><span class="item-dots"></span><span class="item-price">720 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tuna Special Pizza" data-price="750" data-category="Pizza" data-icon="🍕"
-        data-desc="Flaked tuna on a creamy pizza base with Mediterranean herbs."
-        data-details="Flaked tuna spread over a creamy base with capers, olives, and Mediterranean herbs. A distinctly fresh and savoury pizza experience."
-        data-tags="Gluten · Dairy · Fish">
-        <span class="item-name">Tuna Special Pizza</span><span class="item-dots"></span><span class="item-price">750 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Margherita Pizza" data-price="570" data-category="Pizza" data-icon="🍕"
-        data-desc="Classic margherita with tomato, mozzarella, and fresh basil."
-        data-details="The timeless Italian classic — vibrant tomato sauce, creamy melted mozzarella, and fresh basil leaves on a perfectly crisp base. Simple and always perfect."
-        data-tags="Gluten · Dairy · Vegetarian">
-        <span class="item-name">Margherita Pizza</span><span class="item-dots"></span><span class="item-price">570 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tuna Fasting Pizza" data-price="580" data-category="Pizza" data-icon="🍕"
-        data-desc="Fasting-friendly tuna pizza without dairy cheese."
-        data-details="A thoughtful fasting option — our tuna pizza prepared without dairy, featuring flaked tuna, tomato sauce, and herbs on a golden base. Flavourful and guilt-free."
-        data-tags="Gluten · Fish · Fasting-Friendly">
-        <span class="item-name">Tuna Fasting Pizza</span><span class="item-dots"></span><span class="item-price">580 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Vegetarian Pizza" data-price="450" data-category="Pizza" data-icon="🍕"
-        data-desc="Colourful vegetable pizza with garden-fresh toppings."
-        data-details="A vibrant pizza topped with a colourful selection of fresh garden vegetables on our house tomato sauce and melted cheese. Light, fresh, and deeply satisfying."
-        data-tags="Gluten · Dairy · Vegetarian">
-        <span class="item-name">Vegetarian Pizza</span><span class="item-dots"></span><span class="item-price">450 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
 
-</div><!-- /sections-grid -->
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', () => openModal(item));
+        });
 
-<!-- ══════════════════════ ASIAN + PASTA ══════════════════════ -->
-<div class="sec-divider" id="asian"><span>&#9670;</span></div>
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-<div class="sections-grid">
-
-  <!-- ASIAN FUSION -->
-  <div>
-    <div class="section-header">
-      <div class="section-icon">🥢</div>
-      <div class="section-label">Asian Fusion<small>International Flavours</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Special Noodles" data-price="650" data-category="Asian Fusion" data-icon="🍜"
-        data-desc="Wok-tossed noodles with vegetables and house special sauce."
-        data-details="Our signature noodle dish — stir-fried with a medley of vegetables, soy-based house sauce, and aromatic sesame oil. A crowd favourite that keeps guests coming back."
-        data-tags="Gluten · Soy · Signature">
-        <span class="item-name">Special Noodles</span><span class="item-dots"></span><span class="item-price">650 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chicken Noodles" data-price="630" data-category="Asian Fusion" data-icon="🍜"
-        data-desc="Stir-fried noodles with tender chicken and Asian seasonings."
-        data-details="Juicy chicken pieces tossed with silky noodles, crisp vegetables, and a savory Asian-inspired sauce. Satisfying, aromatic, and packed with flavour."
-        data-tags="Gluten · Soy · Poultry">
-        <span class="item-name">Chicken Noodles</span><span class="item-dots"></span><span class="item-price">630 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="European Combo" data-price="1000" data-category="Asian Fusion" data-icon="🍽️"
-        data-desc="A mixed European-inspired platter with chef's selection."
-        data-details="A sophisticated fusion platter drawing inspiration from European culinary traditions, assembled by our chef for a diverse and satisfying dining experience."
-        data-tags="Dairy · Gluten · Meat">
-        <span class="item-name">European Combo</span><span class="item-dots"></span><span class="item-price">1,000 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chicken Mexican" data-price="800" data-category="Asian Fusion" data-icon="🌮"
-        data-desc="Spiced chicken with Mexican-style toppings and sides."
-        data-details="Boldly seasoned chicken served with Mexican-inspired accompaniments — smoky spices, fresh salsa, and vibrant colours. A fiesta on your plate."
-        data-tags="Poultry · Gluten · Spicy">
-        <span class="item-name">Chicken Mexican</span><span class="item-dots"></span><span class="item-price">800 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Superme Spice Chicken" data-price="900" data-category="Asian Fusion" data-icon="🌶️"
-        data-desc="Intensely spiced crispy chicken with a fiery kick."
-        data-details="Not for the faint-hearted — our Superme Spice Chicken delivers bold, fiery crunch with layer upon layer of our signature spice blend. Crispy outside, juicy inside."
-        data-tags="Poultry · Gluten · Very Spicy">
-        <span class="item-name">Superme Spice Chicken</span><span class="item-dots"></span><span class="item-price">900 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Flank Steak" data-price="600" data-category="Asian Fusion" data-icon="🥩"
-        data-desc="Grilled flank steak with seasoned sides."
-        data-details="A well-marinated flank steak grilled to your preference and served with seasoned sides. Robust beefy flavour with a satisfying char from our grill."
-        data-tags="Beef · Gluten-Free">
-        <span class="item-name">Flank Steak</span><span class="item-dots"></span><span class="item-price">600 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chicken Fajita" data-price="800" data-category="Asian Fusion" data-icon="🌯"
-        data-desc="Sizzling chicken strips with peppers and warm tortillas."
-        data-details="Sizzling strips of marinated chicken served with colourful sautéed peppers and onions, accompanied by warm tortillas and fresh sides. A classic crowd-pleaser."
-        data-tags="Poultry · Gluten · Spicy">
-        <span class="item-name">Chicken Fajita</span><span class="item-dots"></span><span class="item-price">800 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Fried Chicken" data-price="900" data-category="Asian Fusion" data-icon="🍗"
-        data-desc="Golden crispy fried chicken with dipping sauce."
-        data-details="Perfectly seasoned and fried to a golden crisp — juicy on the inside with an irresistibly crunchy coating. Served with your choice of dipping sauce."
-        data-tags="Poultry · Gluten">
-        <span class="item-name">Fried Chicken</span><span class="item-dots"></span><span class="item-price">900 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Full Roast Chicken" data-price="3000" data-category="Asian Fusion" data-icon="🍗"
-        data-desc="Whole slow-roasted chicken with herbs and sides — great for sharing."
-        data-details="A whole chicken slow-roasted to golden perfection with aromatic herbs and spices. Ideal for sharing — juicy, flavourful, and a true showstopper at the table."
-        data-tags="Poultry · Shareable">
-        <span class="item-name">Full Roast Chicken</span><span class="item-dots"></span><span class="item-price">3,000 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Half Roast Chicken" data-price="1600" data-category="Asian Fusion" data-icon="🍗"
-        data-desc="Half portion of our slow-roasted herb chicken."
-        data-details="Half of our signature whole roast chicken — all the same incredible flavour and tenderness, in a portion perfect for one hungry diner."
-        data-tags="Poultry">
-        <span class="item-name">Half Roast Chicken</span><span class="item-dots"></span><span class="item-price">1,600 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
-
-  <!-- PASTA & RICE -->
-  <div id="pasta">
-    <div class="section-header">
-      <div class="section-icon">🍝</div>
-      <div class="section-label">Pasta &amp; Rice<small>Comforting Classics</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Meat Sauce Pasta" data-price="450" data-category="Pasta &amp; Rice" data-icon="🍝"
-        data-desc="Al dente pasta in a rich slow-cooked meat sauce."
-        data-details="Al dente pasta smothered in a rich, slow-simmered meat sauce seasoned with garlic, tomatoes, and aromatic herbs. A timeless comfort classic."
-        data-tags="Gluten · Meat">
-        <span class="item-name">Meat Sauce</span><span class="item-dots"></span><span class="item-price">450 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Vegetable Pasta" data-price="300" data-category="Pasta &amp; Rice" data-icon="🍝"
-        data-desc="Pasta tossed with seasonal vegetables and olive oil."
-        data-details="A light and fresh pasta dish tossed with colourful seasonal vegetables, garlic, and a drizzle of olive oil. Simple, wholesome, and delicious."
-        data-tags="Gluten · Vegan">
-        <span class="item-name">Vegetable</span><span class="item-dots"></span><span class="item-price">300 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tomato Sauce Pasta" data-price="300" data-category="Pasta &amp; Rice" data-icon="🍝"
-        data-desc="Classic pasta in a fresh, tangy tomato and herb sauce."
-        data-details="A pure and vibrant tomato sauce made from ripe tomatoes, garlic, and herbs served over perfectly cooked pasta. A beloved Italian-inspired staple."
-        data-tags="Gluten · Vegan">
-        <span class="item-name">Tomato Sauce</span><span class="item-dots"></span><span class="item-price">300 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tuna Sauce Pasta" data-price="480" data-category="Pasta &amp; Rice" data-icon="🍝"
-        data-desc="Pasta with flaked tuna in a creamy Mediterranean sauce."
-        data-details="Tender pasta combined with flaked tuna in a creamy, savoury sauce with capers and herbs. A satisfying Mediterranean-inspired dish."
-        data-tags="Gluten · Fish · Dairy">
-        <span class="item-name">Tuna Sauce</span><span class="item-dots"></span><span class="item-price">480 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Lazagna" data-price="650" data-category="Pasta &amp; Rice" data-icon="🍝"
-        data-desc="Layered baked lasagna with meat, béchamel, and melted cheese."
-        data-details="Classic baked lasagna with layers of tender pasta sheets, rich meat sauce, creamy béchamel, and melted cheese. Golden on top, hearty throughout — a true Italian comfort."
-        data-tags="Gluten · Dairy · Meat">
-        <span class="item-name">Lazagna</span><span class="item-dots"></span><span class="item-price">650 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
-
-</div><!-- /sections-grid -->
-
-<!-- ══════════════════════ JUICE + HOT DRINKS ══════════════════════ -->
-<div class="sec-divider" id="juice"><span>&#9670;</span></div>
-
-<div class="sections-grid">
-
-  <!-- JUICE -->
-  <div>
-    <div class="section-header">
-      <div class="section-icon">🥤</div>
-      <div class="section-label">Juice &amp; Shakes<small>Fresh &amp; Blended</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Yo Special Juice" data-price="220" data-category="Juice &amp; Shakes" data-icon="🥤"
-        data-desc="Yo Bar's signature blend of fresh seasonal fruits."
-        data-details="A secret blend of fresh seasonal fruits crafted by our juicers — vibrant, sweet, and bursting with natural goodness. Our house favourite."
-        data-tags="Vegan · Fresh · Signature">
-        <span class="item-name">Yo Special Juice</span><span class="item-dots"></span><span class="item-price">220 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Telebea Shake" data-price="160" data-category="Juice &amp; Shakes" data-icon="🥛"
-        data-desc="Creamy telebea fruit shake — sweet and satisfying."
-        data-details="A creamy, thick shake made from telebea fruit blended to silky perfection. Sweet, nourishing, and uniquely Ethiopian."
-        data-tags="Dairy · Fresh">
-        <span class="item-name">Telebea Shake</span><span class="item-dots"></span><span class="item-price">160 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Mixed Juice" data-price="200" data-category="Juice &amp; Shakes" data-icon="🥤"
-        data-desc="Refreshing blend of multiple fresh seasonal fruits."
-        data-details="A vibrant mix of freshly pressed seasonal fruits, layered or blended for a colourful and nutritious drink. Every glass is a little different."
-        data-tags="Vegan · Fresh">
-        <span class="item-name">Mixed Juice</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Chocolate Juice" data-price="240" data-category="Juice &amp; Shakes" data-icon="🍫"
-        data-desc="Rich chocolate shake blended with milk."
-        data-details="A decadent, thick chocolate shake made with rich cocoa and creamy milk. The ultimate treat for chocolate lovers of any age."
-        data-tags="Dairy · Sweet">
-        <span class="item-name">Chocolate Juice</span><span class="item-dots"></span><span class="item-price">240 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Protein Shake" data-price="200" data-category="Juice &amp; Shakes" data-icon="💪"
-        data-desc="Energising protein-rich shake — great post-workout."
-        data-details="A nourishing protein shake blended with wholesome ingredients to fuel your body. The smart choice after activity or a busy morning."
-        data-tags="Dairy · Healthy">
-        <span class="item-name">Protein Shake</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Avocado Juice" data-price="200" data-category="Juice &amp; Shakes" data-icon="🥑"
-        data-desc="Thick and creamy fresh avocado juice."
-        data-details="Pure, fresh avocado blended into a thick and luscious juice. Creamy, mild, and packed with natural healthy fats — an Ethiopian café staple."
-        data-tags="Vegan · Healthy">
-        <span class="item-name">Avocado</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Papaya Juice" data-price="200" data-category="Juice &amp; Shakes" data-icon="🍈"
-        data-desc="Fresh papaya blended into a smooth, tropical juice."
-        data-details="Ripe papaya blended smooth — sweet, tropical, and full of natural goodness. Light and refreshing with a distinctive tropical flavour."
-        data-tags="Vegan · Fresh">
-        <span class="item-name">Papaya</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Pineapple Juice" data-price="250" data-category="Juice &amp; Shakes" data-icon="🍍"
-        data-desc="Sweet and tangy fresh pineapple juice."
-        data-details="Freshly pressed pineapple juice — sweet, tangy, and bursting with tropical flavour. A bright, energising drink to lift your mood."
-        data-tags="Vegan · Fresh">
-        <span class="item-name">Pineapple</span><span class="item-dots"></span><span class="item-price">250 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Oreo Shake" data-price="320" data-category="Juice &amp; Shakes" data-icon="🍪"
-        data-desc="Creamy blended Oreo cookie milkshake."
-        data-details="Crushed Oreo cookies blended with creamy milk and ice cream into a thick, indulgent shake. A dessert in a glass that nobody can resist."
-        data-tags="Dairy · Sweet">
-        <span class="item-name">Oreo Shake</span><span class="item-dots"></span><span class="item-price">320 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Strawberry Shake" data-price="300" data-category="Juice &amp; Shakes" data-icon="🍓"
-        data-desc="Sweet and creamy fresh strawberry milkshake."
-        data-details="Fresh strawberries blended with creamy milk into a vibrant pink milkshake. Fruity, sweet, and utterly refreshing."
-        data-tags="Dairy · Fresh">
-        <span class="item-name">Strobery</span><span class="item-dots"></span><span class="item-price">300 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Ananas Juice" data-price="200" data-category="Juice &amp; Shakes" data-icon="🍍"
-        data-desc="Fresh ananas (pineapple variety) blended juice."
-        data-details="A refreshing blend of fresh ananas — light, tropical, and naturally sweet. A clean, thirst-quenching choice any time of day."
-        data-tags="Vegan · Fresh">
-        <span class="item-name">Ananas</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
-
-  <!-- HOT DRINKS -->
-  <div id="hotdrinks">
-    <div class="section-header">
-      <div class="section-icon">☕</div>
-      <div class="section-label">Hot Drinks<small>Coffee, Tea &amp; More</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Makiyato" data-price="100" data-category="Hot Drinks" data-icon="☕"
-        data-desc="Ethiopian-style macchiato — espresso with a dash of milk."
-        data-details="A beloved Ethiopian coffee ritual — a strong shot of espresso topped with a small amount of creamy milk. Bold, smooth, and deeply satisfying."
-        data-tags="Dairy · Coffee · Signature">
-        <span class="item-name">Makiyato</span><span class="item-dots"></span><span class="item-price">100 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Coffee" data-price="80" data-category="Hot Drinks" data-icon="☕"
-        data-desc="Classic Ethiopian black coffee."
-        data-details="Our house black coffee — brewed fresh from quality Ethiopian beans. Strong, aromatic, and the cornerstone of our beverage menu."
-        data-tags="Coffee · Vegan">
-        <span class="item-name">Coffee</span><span class="item-dots"></span><span class="item-price">80 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Special Tea" data-price="150" data-category="Hot Drinks" data-icon="🍵"
-        data-desc="Aromatic blended herbal or spiced special tea."
-        data-details="Our house special tea — a carefully blended aromatic brew with warming spices and herbal notes. Each cup is a little moment of calm."
-        data-tags="Tea · Vegan">
-        <span class="item-name">Special Tea</span><span class="item-dots"></span><span class="item-price">150 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Cappuccino" data-price="110" data-category="Hot Drinks" data-icon="☕"
-        data-desc="Espresso topped with steamed milk and silky foam."
-        data-details="Classic Italian cappuccino — a shot of rich espresso crowned with velvety steamed milk and a thick layer of silky foam. The perfect coffee moment."
-        data-tags="Dairy · Coffee">
-        <span class="item-name">Cappuccino</span><span class="item-dots"></span><span class="item-price">110 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Latte" data-price="100" data-category="Hot Drinks" data-icon="☕"
-        data-desc="Smooth espresso with steamed milk — mild and creamy."
-        data-details="A smooth, mild coffee drink made from espresso and a generous pour of steamed milk. Creamy, gentle, and endlessly comforting."
-        data-tags="Dairy · Coffee">
-        <span class="item-name">Latte</span><span class="item-dots"></span><span class="item-price">100 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Keshir" data-price="60" data-category="Hot Drinks" data-icon="🍵"
-        data-desc="Traditional Ethiopian spiced herbal infusion."
-        data-details="A soothing traditional Ethiopian herbal drink. Warm, mildly spiced, and wonderfully gentle — an affordable cup of local comfort."
-        data-tags="Tea · Vegan · Traditional">
-        <span class="item-name">Keshir</span><span class="item-dots"></span><span class="item-price">60 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tea" data-price="50" data-category="Hot Drinks" data-icon="🍵"
-        data-desc="Classic hot black tea."
-        data-details="Simple, honest black tea brewed hot and served fresh. The most straightforward comfort in a cup — always a reliable choice."
-        data-tags="Tea · Vegan">
-        <span class="item-name">Tea</span><span class="item-dots"></span><span class="item-price">50 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Tea with Lemon" data-price="80" data-category="Hot Drinks" data-icon="🍋"
-        data-desc="Hot black tea brightened with a squeeze of fresh lemon."
-        data-details="Hot black tea served with a wedge of fresh lemon — bright, refreshing, and naturally cleansing. A great choice when you need something light and warm."
-        data-tags="Tea · Vegan">
-        <span class="item-name">Tea with Lemon</span><span class="item-dots"></span><span class="item-price">80 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Nut Tea" data-price="100" data-category="Hot Drinks" data-icon="🌰"
-        data-desc="Warm herbal nut-infused tea — rich and nourishing."
-        data-details="A warming, aromatic tea infused with nuts for a rich, earthy flavour. Nourishing, filling, and a uniquely satisfying hot drink experience."
-        data-tags="Tea · Vegan">
-        <span class="item-name">Nut Tea</span><span class="item-dots"></span><span class="item-price">100 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Ice Coffee" data-price="200" data-category="Hot Drinks" data-icon="🧊"
-        data-desc="Chilled coffee served over ice — smooth and refreshing."
-        data-details="Strong brewed coffee poured over ice and served cold — smooth, bold, and perfect for warmer days when you still need your coffee fix."
-        data-tags="Dairy · Coffee · Cold">
-        <span class="item-name">Ice Coffee</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Hot Chocolate" data-price="200" data-category="Hot Drinks" data-icon="🍫"
-        data-desc="Rich, creamy hot chocolate — a warm indulgence."
-        data-details="Velvety hot chocolate made from rich cocoa and steamed creamy milk. A warm, indulgent hug in a mug — perfect for any time of day."
-        data-tags="Dairy · Sweet">
-        <span class="item-name">Hot Chocholet</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Hot Caramel" data-price="200" data-category="Hot Drinks" data-icon="🍯"
-        data-desc="Warm, sweet caramel-flavoured drink with steamed milk."
-        data-details="A warm, sweet drink infused with rich caramel and creamy steamed milk. Smooth, indulgent, and wonderfully comforting."
-        data-tags="Dairy · Sweet">
-        <span class="item-name">Hot Caramel</span><span class="item-dots"></span><span class="item-price">200 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Jebena Coffee" data-price="60" data-category="Hot Drinks" data-icon="🫖"
-        data-desc="Traditional Ethiopian jebena-brewed coffee ceremony cup."
-        data-details="Coffee brewed the traditional Ethiopian way in a clay jebena pot — served in small cups with popcorn as is customary. A true cultural experience in every sip."
-        data-tags="Coffee · Vegan · Traditional · Ceremony">
-        <span class="item-name">Jebena Coffee</span><span class="item-dots"></span><span class="item-price">60 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
-
-</div><!-- /sections-grid -->
-
-<!-- ══════════════════════ COLD DRINKS + FISH + SALADS ══════════════════════ -->
-<div class="sec-divider" id="colddrinks"><span>&#9670;</span></div>
-
-<div class="sections-grid">
-
-  <!-- COLD DRINKS -->
-  <div>
-    <div class="section-header">
-      <div class="section-icon">🍺</div>
-      <div class="section-label">Cold Drinks<small>Refreshments</small></div>
-    </div>
-    <ul class="menu-list">
-      <li class="menu-item" data-title="Soft Drinks" data-price="80" data-category="Cold Drinks" data-icon="🥤"
-        data-desc="Chilled assorted sodas and soft drinks."
-        data-details="A selection of chilled sodas and soft drinks. Ask your server for available flavours — always served ice-cold."
-        data-tags="Non-Alcoholic">
-        <span class="item-name">Soft Drinks</span><span class="item-dots"></span><span class="item-price">80 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Beer" data-price="140" data-category="Cold Drinks" data-icon="🍺"
-        data-desc="Cold local or imported beer served in a chilled glass."
-        data-details="Enjoy a cold, refreshing beer — locally brewed or imported — served ice-cold. The perfect companion to any of our meals. Ask for today's selection."
-        data-tags="Alcohol · Gluten">
-        <span class="item-name">Beer</span><span class="item-dots"></span><span class="item-price">140 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="1L Water" data-price="70" data-category="Cold Drinks" data-icon="💧"
-        data-desc="Chilled 1-litre bottled mineral water."
-        data-details="A large 1-litre bottle of pure, chilled mineral water to keep you refreshed throughout your meal. The sensible choice."
-        data-tags="Non-Alcoholic">
-        <span class="item-name">1lt Water</span><span class="item-dots"></span><span class="item-price">70 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="0.5L Water" data-price="60" data-category="Cold Drinks" data-icon="💧"
-        data-desc="Chilled 500ml bottled mineral water."
-        data-details="A standard 500ml bottle of pure, chilled mineral water — perfect for lighter sipping alongside your meal."
-        data-tags="Non-Alcoholic">
-        <span class="item-name">0.5 Water</span><span class="item-dots"></span><span class="item-price">60 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Sinq" data-price="130" data-category="Cold Drinks" data-icon="🍯"
-        data-desc="Traditional Ethiopian fermented honey wine."
-        data-details="A traditional Ethiopian beverage made from fermented honey — mildly sweet, naturally carbonated, and uniquely satisfying. A true taste of Ethiopian culture."
-        data-tags="Alcohol · Traditional">
-        <span class="item-name">Sinq</span><span class="item-dots"></span><span class="item-price">130 birr</span><span class="item-tap">tap ›</span>
-      </li>
-      <li class="menu-item" data-title="Nigus" data-price="120" data-category="Cold Drinks" data-icon="🥂"
-        data-desc="Premium Ethiopian chilled beverage."
-        data-details="A premium Ethiopian cold drink — smooth, satisfying, and refreshing. The perfect companion to round off your dining experience at Yo Bar & Restaurant."
-        data-tags="Non-Alcoholic">
-        <span class="item-name">Nigus</span><span class="item-dots"></span><span class="item-price">120 birr</span><span class="item-tap">tap ›</span>
-      </li>
-    </ul>
-  </div>
-
-  <!-- FISH CORNER + SALADS stacked -->
-  <div>
-    <div id="fish">
-      <div class="section-header">
-        <div class="section-icon">🐟</div>
-        <div class="section-label">Fish Corner<small>From the Sea</small></div>
-      </div>
-      <ul class="menu-list">
-        <li class="menu-item" data-title="Fish Goulash" data-price="500" data-category="Fish Corner" data-icon="🐟"
-          data-desc="Tender fish in a rich, spiced goulash sauce."
-          data-details="Flaky fish cooked in a rich, paprika-spiced goulash sauce with onions and tomatoes. A warming, deeply flavoured dish that bridges Ethiopian and European traditions."
-          data-tags="Fish · Gluten-Free">
-          <span class="item-name">Fish Goulash</span><span class="item-dots"></span><span class="item-price">500 birr</span><span class="item-tap">tap ›</span>
-        </li>
-        <li class="menu-item" data-title="Fish Lebleb" data-price="480" data-category="Fish Corner" data-icon="🐟"
-          data-desc="Fish cooked with chickpeas and Ethiopian spices."
-          data-details="A unique combination of flaky fish cooked with tender chickpeas (lebleb) and seasoned with Ethiopian spices. Hearty, wholesome, and full of character."
-          data-tags="Fish · Protein-Rich">
-          <span class="item-name">Fish Lebleb</span><span class="item-dots"></span><span class="item-price">480 birr</span><span class="item-tap">tap ›</span>
-        </li>
-        <li class="menu-item" data-title="Fish Cutlet" data-price="500" data-category="Fish Corner" data-icon="🐟"
-          data-desc="Crispy seasoned fish cutlets, golden and crunchy."
-          data-details="Seasoned fish portions coated in a crispy breadcrumb crust and fried to golden perfection. Crunchy on the outside, tender and flaky within."
-          data-tags="Fish · Gluten">
-          <span class="item-name">Fish Cutlet</span><span class="item-dots"></span><span class="item-price">500 birr</span><span class="item-tap">tap ›</span>
-        </li>
-      </ul>
-    </div>
-
-    <div id="salads" style="margin-top:40px;">
-      <div class="section-header">
-        <div class="section-icon">🥗</div>
-        <div class="section-label">Salads<small>Fresh &amp; Light</small></div>
-      </div>
-      <ul class="menu-list">
-        <li class="menu-item" data-title="Special Salad" data-price="550" data-category="Salads" data-icon="🥗"
-          data-desc="Chef's special salad with premium ingredients and house dressing."
-          data-details="Our chef's signature salad — a generous bowl of premium seasonal vegetables, toppings, and a specially crafted house dressing. Fresh, vibrant, and deeply satisfying."
-          data-tags="Vegetarian · Fresh · Signature">
-          <span class="item-name">Special Salad</span><span class="item-dots"></span><span class="item-price">550 birr</span><span class="item-tap">tap ›</span>
-        </li>
-        <li class="menu-item" data-title="Mixed Salad" data-price="350" data-category="Salads" data-icon="🥗"
-          data-desc="Fresh mixed seasonal vegetable salad."
-          data-details="A colourful, refreshing mix of fresh seasonal vegetables tossed in a light dressing. Simple, clean, and the perfect accompaniment to any main course."
-          data-tags="Vegan · Fresh">
-          <span class="item-name">Mixed Salad</span><span class="item-dots"></span><span class="item-price">350 birr</span><span class="item-tap">tap ›</span>
-        </li>
-        <li class="menu-item" data-title="Tuna Salad" data-price="600" data-category="Salads" data-icon="🥗"
-          data-desc="Fresh salad loaded with flaked tuna and Mediterranean-style dressing."
-          data-details="A hearty salad featuring generous flaked tuna over a bed of fresh vegetables with a Mediterranean-inspired dressing. Protein-rich, fresh, and fully satisfying."
-          data-tags="Fish · Fresh · Protein-Rich">
-          <span class="item-name">Tuna Salad</span><span class="item-dots"></span><span class="item-price">600 birr</span><span class="item-tap">tap ›</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-</div><!-- /sections-grid -->
-
-</main>
-
-<!-- ══════════════════════ FOOTER ══════════════════════ -->
-<footer>
-  <div class="footer-logo">Yo Bar &amp; Restaurant</div>
-  <div class="footer-tagline">Feels Every Thing</div>
-  <div class="footer-grid">
-    <div class="footer-col">
-      <h4>Visit Us</h4>
-      <p>Nazreth (Adama)</p>
-      <p>Oromia, Ethiopia</p>
-    </div>
-    <div class="footer-col">
-      <h4>Opening Hours</h4>
-      <p>Every Day</p>
-      <p>Morning to Late Night</p>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <p>Ask staff for details</p>
-    </div>
-  </div>
-  <div class="footer-copy">&copy; 2026 Yo Bar &amp; Restaurant &nbsp;·&nbsp; All Rights Reserved</div>
-</footer>
-
-<!-- ══════════════════════ MODAL ══════════════════════ -->
-<div class="modal-backdrop" id="modal">
-  <div class="modal-box">
-    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-    <div class="modal-img-strip">
-      <div class="modal-plate-icon" id="modalIcon">🍽️</div>
-    </div>
-    <div class="modal-body">
-      <div class="modal-category" id="modalCat">Category</div>
-      <div class="modal-title" id="modalTitle">Dish Name</div>
-      <div class="modal-price-tag">
-        <span id="modalPrice">0</span>
-        <small>Ethiopian Birr</small>
-      </div>
-      <p class="modal-desc" id="modalDesc">Short description.</p>
-      <div class="modal-divider"></div>
-      <div class="modal-section-label">Chef's Notes</div>
-      <p class="modal-details" id="modalDetails">Full details here.</p>
-      <div class="modal-divider"></div>
-      <div class="modal-section-label">Dietary Info</div>
-      <div class="modal-tags" id="modalTags"></div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Navbar scroll highlight
-  const header = document.querySelector('header');
-  window.addEventListener('scroll', () => {
-    header.style.boxShadow = window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,0.5)' : 'none';
-  });
-
-  // Modal logic
-  const modal = document.getElementById('modal');
-  const modalClose = document.getElementById('modalClose');
-  const modalIcon = document.getElementById('modalIcon');
-  const modalCat = document.getElementById('modalCat');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalPrice = document.getElementById('modalPrice');
-  const modalDesc = document.getElementById('modalDesc');
-  const modalDetails = document.getElementById('modalDetails');
-  const modalTags = document.getElementById('modalTags');
-
-  function openModal(el) {
-    modalIcon.textContent  = el.dataset.icon || '🍽️';
-    modalCat.textContent   = el.dataset.category || '';
-    modalTitle.textContent = el.dataset.title || '';
-    modalPrice.textContent = Number(el.dataset.price).toLocaleString() + ' birr';
-    modalDesc.textContent  = el.dataset.desc || '';
-    modalDetails.textContent = el.dataset.details || '';
-    // Tags
-    modalTags.innerHTML = '';
-    (el.dataset.tags || '').split('·').forEach(t => {
-      const tag = document.createElement('span');
-      tag.className = 'modal-tag';
-      tag.textContent = t.trim();
-      modalTags.appendChild(tag);
-    });
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', () => openModal(item));
-  });
-
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  // Smooth scroll for nav
-  document.querySelectorAll('nav a').forEach(a => {
-    a.addEventListener('click', e => {
-      const href = a.getAttribute('href');
-      if (href.startsWith('#')) {
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-</script>
+        // Smooth scroll for nav
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', e => {
+                const href = a.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
