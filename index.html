@@ -3,25 +3,26 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Yo Bar & Restaurant — Full Menu</title>
+<title>AK Digitals — Full Menu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet"/>
 <style>
 /* ═══════════════════════════════════════════
-   DESIGN TOKENS — AROUNDA PALETTE
+   DESIGN TOKENS — AK DIGITALS PALETTE
+   Deep navy / electric cyan / pure white
 ═══════════════════════════════════════════ */
 :root{
-  --fire:#FF6D29;
-  --brown:#453027;
-  --void:#161316;
+  --fire:#00C2FF;
+  --brown:#0d1e2e;
+  --void:#080D12;
   --smoke:#BABABA;
   --white:#FFFFFF;
-  --orange-dim:rgba(255,109,41,0.15);
-  --orange-glow:rgba(255,109,41,0.35);
-  --surface:rgba(22,19,22,0.92);
-  --card-bg:#1c1519;
-  --border:rgba(255,109,41,0.18);
+  --orange-dim:rgba(0,194,255,0.12);
+  --orange-glow:rgba(0,194,255,0.30);
+  --surface:rgba(8,13,18,0.92);
+  --card-bg:#0c1520;
+  --border:rgba(0,194,255,0.16);
   --ff-display:'Cormorant Garamond',Georgia,serif;
   --ff-body:'Outfit',system-ui,sans-serif;
   --ease-out:cubic-bezier(0.22,1,0.36,1);
@@ -55,7 +56,7 @@ body{
 .cursor-ring{
   width:36px;height:36px;
   border-radius:50%;
-  border:1px solid rgba(255,109,41,0.5);
+  border:1px solid rgba(0,194,255,0.5);
   position:fixed;top:0;left:0;
   pointer-events:none;
   z-index:9998;
@@ -87,12 +88,12 @@ header{
   height:68px;
   padding:0 4%;
   display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(255,109,41,0.12);
-  background:rgba(22,19,22,0.85);
+  border-bottom:1px solid rgba(0,194,255,0.10);
+  background:rgba(8,13,18,0.85);
   backdrop-filter:blur(24px) saturate(180%);
   transition:background .4s;
 }
-header.scrolled{background:rgba(22,19,22,0.98)}
+header.scrolled{background:rgba(8,13,18,0.98)}
 
 .logo-mark{
   display:flex;flex-direction:column;gap:0;
@@ -134,14 +135,14 @@ header.scrolled{background:rgba(22,19,22,0.98)}
   .nav-toggle{display:flex}
   .nav-links{
     position:fixed;top:68px;left:0;right:0;
-    background:rgba(22,19,22,0.98);
+    background:rgba(8,13,18,0.98);
     flex-direction:column;padding:24px;
     border-bottom:1px solid var(--border);
     transform:translateY(-110%);opacity:0;
     transition:transform .4s var(--ease-out),opacity .4s;
   }
   .nav-links.open{transform:translateY(0);opacity:1}
-  .nav-links a{padding:12px 8px;width:100%;border-bottom:1px solid rgba(255,109,41,0.06)}
+  .nav-links a{padding:12px 8px;width:100%;border-bottom:1px solid rgba(0,194,255,0.06)}
 }
 
 /* ═══════════════ HERO ═══════════════ */
@@ -157,13 +158,13 @@ header.scrolled{background:rgba(22,19,22,0.98)}
 .hero-bg{
   position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 100% 80% at 50% 60%, rgba(69,48,39,0.8) 0%, var(--void) 70%),
+    radial-gradient(ellipse 100% 80% at 50% 60%, rgba(10,28,46,0.92) 0%, var(--void) 70%),
     url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80&auto=format') center/cover no-repeat;
   z-index:0;
 }
 .hero-bg::after{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,109,41,0.12) 0%, transparent 70%);
+  background:radial-gradient(ellipse 60% 50% at 50% 40%, rgba(0,194,255,0.08) 0%, transparent 70%);
 }
 
 /* Animated lines */
@@ -172,7 +173,7 @@ header.scrolled{background:rgba(22,19,22,0.98)}
 }
 .hero-lines span{
   position:absolute;left:50%;
-  width:1px;background:linear-gradient(to bottom, transparent, rgba(255,109,41,0.25), transparent);
+  width:1px;background:linear-gradient(to bottom, transparent, rgba(0,194,255,0.22), transparent);
   animation:lineRise 4s var(--ease-out) infinite;
   opacity:0;
 }
@@ -194,7 +195,7 @@ header.scrolled{background:rgba(22,19,22,0.98)}
   font-size:.58rem;font-weight:300;
   letter-spacing:6px;text-transform:uppercase;
   color:var(--fire);
-  border:1px solid rgba(255,109,41,0.3);
+  border:1px solid rgba(0,194,255,0.28);
   padding:7px 24px;border-radius:40px;
   display:inline-block;margin-bottom:32px;
   animation:fadeUp 1s .3s var(--ease-out) both;
@@ -243,11 +244,11 @@ header.scrolled{background:rgba(22,19,22,0.98)}
 }
 .hero-cta::before{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
+  background:linear-gradient(135deg,rgba(255,255,255,0.18),transparent);
   transform:translateX(-100%);
   transition:transform .5s var(--ease-out);
 }
-.hero-cta:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(255,109,41,0.4)}
+.hero-cta:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,194,255,0.35)}
 .hero-cta:hover::before{transform:translateX(100%)}
 
 /* Scroll indicator */
@@ -262,7 +263,7 @@ header.scrolled{background:rgba(22,19,22,0.98)}
 .scroll-hint::after{
   content:'';
   width:1px;height:40px;
-  background:linear-gradient(to bottom,rgba(255,109,41,0.5),transparent);
+  background:linear-gradient(to bottom,rgba(0,194,255,0.5),transparent);
   animation:scrollPulse 2s ease-in-out infinite;
 }
 @keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
@@ -275,9 +276,9 @@ header.scrolled{background:rgba(22,19,22,0.98)}
 }
 .sec-divide::before,.sec-divide::after{
   content:'';flex:1;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,109,41,0.3));
+  background:linear-gradient(90deg,transparent,rgba(0,194,255,0.25));
 }
-.sec-divide::after{background:linear-gradient(90deg,rgba(255,109,41,0.3),transparent)}
+.sec-divide::after{background:linear-gradient(90deg,rgba(0,194,255,0.25),transparent)}
 .sec-divide .dot{
   width:6px;height:6px;border-radius:50%;
   background:var(--fire);
@@ -288,7 +289,7 @@ header.scrolled{background:rgba(22,19,22,0.98)}
 .cat-header{
   display:flex;align-items:flex-end;justify-content:space-between;
   margin-bottom:36px;padding-bottom:20px;
-  border-bottom:1px solid rgba(255,109,41,0.12);
+  border-bottom:1px solid rgba(0,194,255,0.10);
 }
 .cat-header-left{display:flex;flex-direction:column;gap:4px}
 .cat-num{
@@ -345,12 +346,12 @@ main{padding:80px 0}
 .menu-card::after{
   content:'';
   position:absolute;inset:0;border-radius:8px;
-  background:linear-gradient(135deg,rgba(255,109,41,0.06),transparent);
+  background:linear-gradient(135deg,rgba(0,194,255,0.05),transparent);
   opacity:0;transition:opacity .3s;
 }
 .menu-card:hover{
-  background:rgba(69,48,39,0.3);
-  border-color:rgba(255,109,41,0.18);
+  background:rgba(0,60,90,0.25);
+  border-color:rgba(0,194,255,0.16);
   transform:translateX(4px);
 }
 .menu-card:hover::after{opacity:1}
@@ -360,12 +361,12 @@ main{padding:80px 0}
   border-radius:6px;
   object-fit:cover;
   flex-shrink:0;
-  filter:brightness(.85) saturate(1.1);
+  filter:brightness(.85) saturate(1.05);
   transition:filter .3s,transform .3s;
   background:var(--brown);
   display:block;
 }
-.menu-card:hover .card-img{filter:brightness(1) saturate(1.2);transform:scale(1.04)}
+.menu-card:hover .card-img{filter:brightness(1) saturate(1.15);transform:scale(1.04)}
 
 .card-body{min-width:0}
 .card-name{
@@ -393,7 +394,7 @@ main{padding:80px 0}
 }
 .card-arrow{
   font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(255,109,41,0.4);
+  color:rgba(0,194,255,0.4);
   opacity:0;transform:translateX(-6px);
   transition:opacity .2s,transform .2s;
 }
@@ -402,7 +403,7 @@ main{padding:80px 0}
 /* ═══════════════ MODAL ═══════════════ */
 .backdrop{
   position:fixed;inset:0;z-index:1000;
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.75);
   backdrop-filter:blur(16px) saturate(120%);
   display:flex;align-items:center;justify-content:center;
   padding:20px;
@@ -415,12 +416,12 @@ main{padding:80px 0}
   width:100%;max-width:560px;
   max-height:92vh;overflow-y:auto;
   background:var(--card-bg);
-  border:1px solid rgba(255,109,41,0.25);
+  border:1px solid rgba(0,194,255,0.22);
   border-radius:16px;
   position:relative;
   transform:translateY(30px) scale(.96);
   transition:transform .5s var(--ease-spring);
-  box-shadow:0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,109,41,0.08);
+  box-shadow:0 40px 100px rgba(0,0,0,0.85), 0 0 0 1px rgba(0,194,255,0.07);
 }
 .backdrop.open .modal{transform:translateY(0) scale(1)}
 
@@ -431,7 +432,7 @@ main{padding:80px 0}
 }
 .modal-hero img{
   width:100%;height:100%;object-fit:cover;
-  filter:brightness(.75) saturate(1.2);
+  filter:brightness(.75) saturate(1.1);
   transition:transform .6s var(--ease-out);
 }
 .backdrop.open .modal-hero img{transform:scale(1.05)}
@@ -443,8 +444,8 @@ main{padding:80px 0}
   position:absolute;top:16px;left:16px;
   font-size:.55rem;font-weight:300;
   letter-spacing:3px;text-transform:uppercase;
-  background:rgba(22,19,22,0.7);
-  border:1px solid rgba(255,109,41,0.3);
+  background:rgba(8,13,18,0.7);
+  border:1px solid rgba(0,194,255,0.28);
   color:var(--fire);padding:5px 14px;border-radius:30px;
   backdrop-filter:blur(8px);
 }
@@ -452,8 +453,8 @@ main{padding:80px 0}
 .modal-close{
   position:absolute;top:14px;right:14px;
   width:36px;height:36px;border-radius:50%;
-  background:rgba(22,19,22,0.8);
-  border:1px solid rgba(255,109,41,0.3);
+  background:rgba(8,13,18,0.8);
+  border:1px solid rgba(0,194,255,0.28);
   color:var(--smoke);font-size:1.1rem;
   cursor:pointer;
   display:flex;align-items:center;justify-content:center;
@@ -473,8 +474,8 @@ main{padding:80px 0}
 }
 .modal-price{
   display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,109,41,0.1);
-  border:1px solid rgba(255,109,41,0.25);
+  background:rgba(0,194,255,0.08);
+  border:1px solid rgba(0,194,255,0.22);
   padding:7px 20px;border-radius:40px;
   margin-bottom:20px;
 }
@@ -484,12 +485,12 @@ main{padding:80px 0}
 }
 .modal-price .p-unit{font-size:.65rem;color:rgba(186,186,186,0.5);font-weight:200;letter-spacing:1px}
 
-.modal-line{height:1px;background:linear-gradient(90deg,transparent,rgba(255,109,41,0.2),transparent);margin:18px 0}
+.modal-line{height:1px;background:linear-gradient(90deg,transparent,rgba(0,194,255,0.18),transparent);margin:18px 0}
 
 .modal-label{
   font-size:.55rem;font-weight:300;
   letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,109,41,0.5);margin-bottom:8px;
+  color:rgba(0,194,255,0.5);margin-bottom:8px;
 }
 .modal-desc-text{
   font-size:.88rem;font-weight:200;
@@ -505,13 +506,13 @@ main{padding:80px 0}
 .modal-tag{
   font-size:.6rem;font-weight:300;letter-spacing:.5px;
   padding:4px 14px;border-radius:40px;
-  border:1px solid rgba(255,109,41,0.25);
-  color:rgba(255,109,41,0.7);
+  border:1px solid rgba(0,194,255,0.22);
+  color:rgba(0,194,255,0.7);
 }
 
 /* ═══════════════ FOOTER ═══════════════ */
 footer{
-  border-top:1px solid rgba(255,109,41,0.1);
+  border-top:1px solid rgba(0,194,255,0.08);
   padding:70px 5% 40px;
   text-align:center;
   position:relative;overflow:hidden;
@@ -520,7 +521,7 @@ footer::before{
   content:'';position:absolute;
   bottom:-100px;left:50%;transform:translateX(-50%);
   width:600px;height:300px;border-radius:50%;
-  background:radial-gradient(ellipse,rgba(255,109,41,0.06),transparent 70%);
+  background:radial-gradient(ellipse,rgba(0,194,255,0.05),transparent 70%);
   pointer-events:none;
 }
 .footer-logo{
@@ -550,7 +551,7 @@ footer::before{
 .footer-copy{
   font-size:.58rem;font-weight:200;
   letter-spacing:2px;color:rgba(255,255,255,0.1);
-  border-top:1px solid rgba(255,109,41,0.06);
+  border-top:1px solid rgba(0,194,255,0.05);
   padding-top:24px;
 }
 
@@ -588,7 +589,7 @@ footer::before{
 <!-- ═══════════ HEADER ═══════════ -->
 <header id="header">
   <div class="logo-mark">
-    <div class="l1"><span>Yo</span> Bar &amp; Restaurant</div>
+    <div class="l1"><span>AK</span> Digitals</div>
     <div class="l2">Taste Every Thing · Adama</div>
   </div>
   <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
@@ -616,7 +617,7 @@ footer::before{
   <div class="hero-content">
     <div class="hero-eyebrow">◆ Adama's Finest · Est. 2020 ◆</div>
     <h1 class="hero-title">
-      Yo Bar &amp;<br><em>Restaurant</em>
+      AK<br><em>Digitals</em>
     </h1>
     <p class="hero-sub">Taste Every Thing &mdash; Full Menu</p>
     <div class="hero-divider"></div>
@@ -711,7 +712,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Omlet" data-price="270" data-category="Breakfast"
           data-img="https://tse4.mm.bing.net/th/id/OIP.L7La5_7B2FF1h46z2MsKagHaG2?rs=1&pid=ImgDetMain&o=7&rm=3"
           data-desc="Classic fluffy omelette seasoned to perfection."
-          data-details="A golden, fluffy omelette prepared with fresh eggs and perfectly seasoned. A reliable and satisfying breakfast staple at Yo Bar & Restaurant."
+          data-details="A golden, fluffy omelette prepared with fresh eggs and perfectly seasoned. A reliable and satisfying breakfast staple at AK Digitals."
           data-tags="Eggs · Dairy">
           <img class="card-img" src="https://tse4.mm.bing.net/th/id/OIP.L7La5_7B2FF1h46z2MsKagHaG2?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Omlet" loading="lazy"/>
           <div class="card-body"><div class="card-name">Omlet</div><div class="card-hint">Fresh Eggs · Golden</div></div>
@@ -747,7 +748,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Combo" data-price="650" data-category="Breakfast"
           data-img="https://tse4.mm.bing.net/th/id/OIP.qUrcO8D2yF3fiaaPAnGEJQHaFW?rs=1&pid=ImgDetMain&o=7&rm=3"
           data-desc="A generous breakfast combination of multiple traditional items."
-          data-details="The ultimate Yo breakfast combination — a well-rounded plate featuring a selection of our favourite traditional breakfast dishes served together for maximum satisfaction."
+          data-details="The ultimate AK Digitals breakfast combination — a well-rounded plate featuring a selection of our favourite traditional breakfast dishes served together for maximum satisfaction."
           data-tags="Meat · Dairy · Gluten">
           <img class="card-img" src="https://tse4.mm.bing.net/th/id/OIP.qUrcO8D2yF3fiaaPAnGEJQHaFW?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Combo" loading="lazy"/>
           <div class="card-body"><div class="card-name">Combo</div><div class="card-hint">Traditional Selections</div></div>
@@ -860,22 +861,22 @@ footer::before{
         <div class="cat-icon-big">🍔</div>
       </div>
       <ul class="menu-list">
-        <li class="menu-card reveal" data-title="Yo Special Burger" data-price="530" data-category="Snack"
+        <li class="menu-card reveal" data-title="AK Special Burger" data-price="530" data-category="Snack"
           data-img="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
-          data-desc="Yo Bar's signature house burger with special sauce."
-          data-details="Our signature house burger — a juicy seasoned patty layered with our special Yo sauce, fresh vegetables, and toasted bun. The one that started it all."
+          data-desc="AK Digitals' signature house burger with special sauce."
+          data-details="Our signature house burger — a juicy seasoned patty layered with our special AK sauce, fresh vegetables, and toasted bun. The one that started it all."
           data-tags="Gluten · Meat · Signature">
-          <img class="card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150&q=70" alt="Yo Special Burger" loading="lazy"/>
-          <div class="card-body"><div class="card-name">Yo Special Burger</div><div class="card-hint">Signature Sauce · Toasted Bun</div></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150&q=70" alt="AK Special Burger" loading="lazy"/>
+          <div class="card-body"><div class="card-name">AK Special Burger</div><div class="card-hint">Signature Sauce · Toasted Bun</div></div>
           <div class="card-right"><div class="card-price">530 birr</div><div class="card-arrow">View →</div></div>
         </li>
-        <li class="menu-card reveal" data-title="Yo Feshta Burger" data-price="700" data-category="Snack"
+        <li class="menu-card reveal" data-title="AK Feshta Burger" data-price="700" data-category="Snack"
           data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80"
-          data-desc="Premium loaded burger — the Yo celebration burger."
+          data-desc="Premium loaded burger — the AK Digitals celebration burger."
           data-details="Our premium celebration burger stacked with extra fillings, double sauce, and everything that makes a burger unforgettable. Order this for a reason to feast."
           data-tags="Gluten · Meat · Premium">
-          <img class="card-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=150&q=70" alt="Yo Feshta Burger" loading="lazy"/>
-          <div class="card-body"><div class="card-name">Yo Feshta Burger</div><div class="card-hint">Premium · Double Sauce</div></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=150&q=70" alt="AK Feshta Burger" loading="lazy"/>
+          <div class="card-body"><div class="card-name">AK Feshta Burger</div><div class="card-hint">Premium · Double Sauce</div></div>
           <div class="card-right"><div class="card-price">700 birr</div><div class="card-arrow">View →</div></div>
         </li>
         <li class="menu-card reveal" data-title="Chicken Shewarema" data-price="580" data-category="Snack"
@@ -899,7 +900,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Chips" data-price="350" data-category="Snack"
           data-img="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&q=80"
           data-desc="Crispy golden fried potato chips."
-          data-details="Golden, crispy fried potato chips — perfectly salted and served hot. A great side or a satisfying snack on their own. Simple pleasures, done well."
+          data-details="Golden, crispy fried potato chips — perfectly salted and served hot. A great side or a satisfying snack on their own."
           data-tags="Vegan · Gluten">
           <img class="card-img" src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=150&q=70" alt="Chips" loading="lazy"/>
           <div class="card-body"><div class="card-name">Chips</div><div class="card-hint">Golden · Crispy · Salted</div></div>
@@ -920,7 +921,7 @@ footer::before{
       <ul class="menu-list">
         <li class="menu-card reveal" data-title="Special Pizza" data-price="700" data-category="Pizza"
           data-img="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80"
-          data-desc="Yo Bar's signature pizza with a chef's selection of toppings."
+          data-desc="AK Digitals' signature pizza with a chef's selection of toppings."
           data-details="Our signature pizza loaded with the chef's special combination of toppings on a perfectly baked base. Every bite is a flavour surprise."
           data-tags="Gluten · Dairy · Signature">
           <img class="card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150&q=70" alt="Special Pizza" loading="lazy"/>
@@ -939,7 +940,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Chicken Pizza" data-price="720" data-category="Pizza"
           data-img="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=800&q=80"
           data-desc="Tender seasoned chicken on a tomato and cheese base."
-          data-details="Juicy seasoned chicken pieces on a rich tomato sauce base, topped with generous mozzarella and aromatic herbs. A favourite for chicken lovers."
+          data-details="Juicy seasoned chicken pieces on a rich tomato sauce base, topped with generous mozzarella and aromatic herbs."
           data-tags="Gluten · Dairy · Poultry">
           <img class="card-img" src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=150&q=70" alt="Chicken Pizza" loading="lazy"/>
           <div class="card-body"><div class="card-name">Chicken Pizza</div><div class="card-hint">Mozzarella · Herbs</div></div>
@@ -957,7 +958,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Vegetarian Pizza" data-price="450" data-category="Pizza"
           data-img="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=800&q=80"
           data-desc="Colourful vegetable pizza with garden-fresh toppings."
-          data-details="A vibrant pizza topped with a colourful selection of fresh garden vegetables on our house tomato sauce and melted cheese. Light, fresh, and deeply satisfying."
+          data-details="A vibrant pizza topped with a colourful selection of fresh garden vegetables on our house tomato sauce and melted cheese."
           data-tags="Gluten · Dairy · Vegetarian">
           <img class="card-img" src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=150&q=70" alt="Vegetarian Pizza" loading="lazy"/>
           <div class="card-body"><div class="card-name">Vegetarian Pizza</div><div class="card-hint">Garden-Fresh · Light</div></div>
@@ -986,7 +987,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Special Noodles" data-price="650" data-category="Asian Fusion"
           data-img="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&q=80"
           data-desc="Wok-tossed noodles with vegetables and house special sauce."
-          data-details="Our signature noodle dish — stir-fried with a medley of vegetables, soy-based house sauce, and aromatic sesame oil. A crowd favourite that keeps guests coming back."
+          data-details="Our signature noodle dish — stir-fried with a medley of vegetables, soy-based house sauce, and aromatic sesame oil."
           data-tags="Gluten · Soy · Signature">
           <img class="card-img" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=150&q=70" alt="Special Noodles" loading="lazy"/>
           <div class="card-body"><div class="card-name">Special Noodles</div><div class="card-hint">Wok-Tossed · Sesame Oil</div></div>
@@ -1004,7 +1005,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Chicken Fajita" data-price="800" data-category="Asian Fusion"
           data-img="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&q=80"
           data-desc="Sizzling chicken strips with peppers and warm tortillas."
-          data-details="Sizzling strips of marinated chicken served with colourful sautéed peppers and onions, accompanied by warm tortillas and fresh sides. A classic crowd-pleaser."
+          data-details="Sizzling strips of marinated chicken served with colourful sautéed peppers and onions, accompanied by warm tortillas and fresh sides."
           data-tags="Poultry · Gluten · Spicy">
           <img class="card-img" src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=150&q=70" alt="Chicken Fajita" loading="lazy"/>
           <div class="card-body"><div class="card-name">Chicken Fajita</div><div class="card-hint">Sizzling · Peppers · Tortilla</div></div>
@@ -1062,7 +1063,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Lazagna" data-price="650" data-category="Pasta &amp; Rice"
           data-img="https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&q=80"
           data-desc="Layered baked lasagna with meat, béchamel, and melted cheese."
-          data-details="Classic baked lasagna with layers of tender pasta sheets, rich meat sauce, creamy béchamel, and melted cheese. Golden on top, hearty throughout — a true Italian comfort."
+          data-details="Classic baked lasagna with layers of tender pasta sheets, rich meat sauce, creamy béchamel, and melted cheese. Golden on top, hearty throughout."
           data-tags="Gluten · Dairy · Meat">
           <img class="card-img" src="https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=150&q=70" alt="Lazagna" loading="lazy"/>
           <div class="card-body"><div class="card-name">Lazagna</div><div class="card-hint">Béchamel · Melted Cheese</div></div>
@@ -1088,13 +1089,13 @@ footer::before{
         <div class="cat-icon-big">🥤</div>
       </div>
       <ul class="menu-list">
-        <li class="menu-card reveal" data-title="Yo Special Juice" data-price="220" data-category="Juice &amp; Shakes"
+        <li class="menu-card reveal" data-title="AK Special Juice" data-price="220" data-category="Juice &amp; Shakes"
           data-img="https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&q=80"
-          data-desc="Yo Bar's signature blend of fresh seasonal fruits."
+          data-desc="AK Digitals' signature blend of fresh seasonal fruits."
           data-details="A secret blend of fresh seasonal fruits crafted by our juicers — vibrant, sweet, and bursting with natural goodness. Our house favourite."
           data-tags="Vegan · Fresh · Signature">
-          <img class="card-img" src="https://images.unsplash.com/photo-1613478223719-2ab802602423?w=150&q=70" alt="Yo Special Juice" loading="lazy"/>
-          <div class="card-body"><div class="card-name">Yo Special Juice</div><div class="card-hint">Secret Blend · Seasonal</div></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1613478223719-2ab802602423?w=150&q=70" alt="AK Special Juice" loading="lazy"/>
+          <div class="card-body"><div class="card-name">AK Special Juice</div><div class="card-hint">Secret Blend · Seasonal</div></div>
           <div class="card-right"><div class="card-price">220 birr</div><div class="card-arrow">View →</div></div>
         </li>
         <li class="menu-card reveal" data-title="Avocado Juice" data-price="200" data-category="Juice &amp; Shakes"
@@ -1232,7 +1233,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Beer" data-price="140" data-category="Cold Drinks"
           data-img="https://tse2.mm.bing.net/th/id/OIP.Wn0ZIrLEKydgcwOcB4Dp-AHaDt?rs=1&pid=ImgDetMain&o=7&rm=3"
           data-desc="Cold local or imported beer served in a chilled glass."
-          data-details="Enjoy a cold, refreshing beer — locally brewed or imported — served ice-cold. The perfect companion to any of our meals. Ask for today's selection."
+          data-details="Enjoy a cold, refreshing beer — locally brewed or imported — served ice-cold. The perfect companion to any of our meals."
           data-tags="Alcohol · Gluten">
           <img class="card-img" src="https://tse2.mm.bing.net/th/id/OIP.Wn0ZIrLEKydgcwOcB4Dp-AHaDt?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Beer" loading="lazy"/>
           <div class="card-body"><div class="card-name">Beer</div><div class="card-hint">Local &amp; Imported · Chilled</div></div>
@@ -1241,7 +1242,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Sinq" data-price="130" data-category="Cold Drinks"
           data-img="https://tse3.mm.bing.net/th/id/OIP.NnGlr2Js7Na5A4omAWlIBgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
           data-desc="Traditional Ethiopian fermented honey wine."
-          data-details="A traditional Ethiopian beverage made from fermented honey — mildly sweet, naturally carbonated, and uniquely satisfying. A true taste of Ethiopian culture."
+          data-details="A traditional Ethiopian beverage made from fermented honey — mildly sweet, naturally carbonated, and uniquely satisfying."
           data-tags="Alcohol · Traditional">
           <img class="card-img" src="https://tse3.mm.bing.net/th/id/OIP.NnGlr2Js7Na5A4omAWlIBgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sinq" loading="lazy"/>
           <div class="card-body"><div class="card-name">Sinq</div><div class="card-hint">Honey Wine · Traditional</div></div>
@@ -1296,7 +1297,7 @@ footer::before{
         <li class="menu-card reveal" data-title="Special Salad" data-price="550" data-category="Salads"
           data-img="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80"
           data-desc="Chef's special salad with premium ingredients and house dressing."
-          data-details="Our chef's signature salad — a generous bowl of premium seasonal vegetables, toppings, and a specially crafted house dressing. Fresh, vibrant, and deeply satisfying."
+          data-details="Our chef's signature salad — a generous bowl of premium seasonal vegetables, toppings, and a specially crafted house dressing."
           data-tags="Vegetarian · Fresh · Signature">
           <img class="card-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=150&q=70" alt="Special Salad" loading="lazy"/>
           <div class="card-body"><div class="card-name">Special Salad</div><div class="card-hint">House Dressing · Signature</div></div>
@@ -1329,14 +1330,14 @@ footer::before{
 
 <!-- ═══════════ FOOTER ═══════════ -->
 <footer>
-  <div class="footer-logo"><span>Yo</span> Bar &amp; Restaurant</div>
+  <div class="footer-logo"><span>AK</span> Digitals</div>
   <div class="footer-sub">Taste Every Thing</div>
   <div class="footer-cols">
     <div class="footer-col"><h4>Visit Us</h4><p>Nazreth (Adama)</p><p>Oromia, Ethiopia</p></div>
     <div class="footer-col"><h4>Hours</h4><p>Every Day</p><p>Morning to Late Night</p></div>
     <div class="footer-col"><h4>Contact</h4><p>Ask staff for details</p></div>
   </div>
-  <div class="footer-copy">&copy; 2026 Yo Bar &amp; Restaurant &nbsp;·&nbsp; All Rights Reserved</div>
+  <div class="footer-copy">&copy; 2026 AK Digitals &nbsp;·&nbsp; All Rights Reserved</div>
 </footer>
 
 <!-- ═══════════ MODAL ═══════════ -->
